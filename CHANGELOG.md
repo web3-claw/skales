@@ -7,6 +7,33 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## v9.3.0 — Stability Release (April 13, 2026)
+
+### Stability
+- BOM-safe JSON reading across entire codebase — Windows crash fix (readJsonSafe utility, 65+ files migrated)
+- Playground Bridge rewrite — duplicate injection removed, unique marker guard, no more dead buttons
+- Auto-updater fix — download button now appears correctly, race condition resolved, event name mismatch fixed
+- Advisor model validation — auto-corrects model IDs for OpenRouter, falls back to primary model on 400/404
+- Playground max_tokens increased to 8192 (chat stays at 4096)
+- Skill loading: 28 individual MODULE_NOT_FOUND errors → 1 summary line
+- Integrity check downgraded from stderr warning to info log
+- Discover Feed null-safe .match() calls — admin posting no longer crashes
+
+### Memory & Intelligence
+- Identity Maintenance untouched (runs at 3:00 AM as always)
+- Memory Consolidation staggered to 3:30 AM — no overlap with Identity Maintenance
+- Knowledge Graph shows helpful hint when empty instead of "0 entities"
+- Agent system prompt updated to v9.3.0 with all current features
+
+### Browser & Automation
+- Persistent browser sessions via launchPersistentContext — logins survive restart
+- Playwright install no longer relies on bare npx — resolves binary from node_modules/.bin/
+
+### Localization
+- Removed all "Coming in v9.2.1" text from 12 locale files
+- Version strings corrected to 9.3.0 everywhere (was 9.0.1 in build, v6.0.0 in telemetry)
+
+
 ## v9.2.5 — "WordPress 2.0" + Playground (April 13, 2026)
 
 ### WordPress 2.0

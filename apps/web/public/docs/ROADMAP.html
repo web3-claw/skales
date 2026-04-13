@@ -381,9 +381,95 @@
 <div class="content">
 
   <!-- ═══════════════════════════════════════════════
-       SHIPPED – v9.1.0 THE STUDIO UPDATE (CURRENT)
+       SHIPPED – v9.3.0 STABILITY RELEASE (CURRENT)
   ════════════════════════════════════════════════ -->
   <div class="release-header">
+    <span class="release-tag" style="color:var(--green);background:var(--green-dim);border-color:var(--green-border);">Shipped</span>
+    <div>
+      <div class="release-title">v9.3.0 — Stability Release <span style="font-size:0.75em;opacity:0.6;font-weight:400;">April 13, 2026</span></div>
+      <div class="release-sub">BOM-safe JSON reading, Playground Bridge rewrite, auto-updater fix, Advisor fallback, and 10+ reliability improvements.</div>
+    </div>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon">🛡️</div>
+      <div class="card-body">
+        <div class="card-title">BOM-safe JSON Reading</div>
+        <div class="card-desc">readJsonSafe/writeJsonSafe used across entire codebase. Fixes Windows crashes caused by UTF-8 BOM in JSON config files.</div>
+        <div class="card-tags"><span class="tag">Stability</span><span class="tag">Windows</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🧩</div>
+      <div class="card-body">
+        <div class="card-title">Playground Bridge Rewrite</div>
+        <div class="card-desc">Complete injection rewrite fixes dead buttons in all Spaces. Bridge API now guards against double-injection and injects before body scripts.</div>
+        <div class="card-tags"><span class="tag">Playground</span><span class="tag">Bridge</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔄</div>
+      <div class="card-body">
+        <div class="card-title">Auto-Updater Fix</div>
+        <div class="card-desc">Download button now appears correctly when an update is available. Resolves UI state issue in the update page.</div>
+        <div class="card-tags"><span class="tag">Electron</span><span class="tag">Updates</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🤖</div>
+      <div class="card-body">
+        <div class="card-title">Advisor Model Validation</div>
+        <div class="card-desc">Advisor now validates model availability with fallback chain. Eliminates 400 errors on OpenRouter when configured model is unavailable.</div>
+        <div class="card-tags"><span class="tag">AI</span><span class="tag">Reliability</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🧠</div>
+      <div class="card-body">
+        <div class="card-title">Memory System Improvements</div>
+        <div class="card-desc">Identity Maintenance preserved, Dreaming staggered to 3:30 AM, Knowledge Graph shows helpful empty-state message.</div>
+        <div class="card-tags"><span class="tag">Memory</span><span class="tag">Intelligence</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🌐</div>
+      <div class="card-body">
+        <div class="card-title">Playwright Persistent Sessions</div>
+        <div class="card-desc">Browser logins now survive restarts. Persistent context storage for Playwright automation sessions.</div>
+        <div class="card-tags"><span class="tag">Browser</span><span class="tag">Automation</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔇</div>
+      <div class="card-body">
+        <div class="card-title">Logging Cleanup</div>
+        <div class="card-desc">Skill loading shows batch summary instead of 28 individual lines. Integrity check downgraded to info-level.</div>
+        <div class="card-tags"><span class="tag">DX</span><span class="tag">Logging</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">📰</div>
+      <div class="card-body">
+        <div class="card-title">Discover Feed Fixes</div>
+        <div class="card-desc">Null-safe rendering prevents crashes on malformed posts. Admin posting and delete restored.</div>
+        <div class="card-tags"><span class="tag">Discover</span><span class="tag">Feed</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       SHIPPED – v9.1.0 THE STUDIO UPDATE
+  ════════════════════════════════════════════════ -->
+  <div class="release-header" style="margin-top: 3rem;">
     <span class="release-tag" style="color:var(--green);background:var(--green-dim);border-color:var(--green-border);">Shipped</span>
     <div>
       <div class="release-title">v9.1.0 — The Studio Update <span style="font-size:0.75em;opacity:0.6;font-weight:400;">April 7, 2026</span></div>
