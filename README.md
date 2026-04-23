@@ -9,6 +9,11 @@
     <img src="https://skales.app/readme.gif" alt="Skales AI Desktop Agent Interface" width="100%" />
 
 </p>
+<p align="center">
+  <a href="https://github.com/skalesapp/skales/discussions/80">
+    <img src="https://skales.app/mobile.png" alt="Skales Mobile is coming" width="800">
+  </a>
+</p>
   <p align="center">
   <a href="https://www.youtube.com/watch?v=k83NlptVmfc">
     <img src="https://img.youtube.com/vi/k83NlptVmfc/maxresdefault.jpg" 
