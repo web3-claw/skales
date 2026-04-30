@@ -7,7 +7,34 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-## v10.1.0 "Design" — 2026-04-28
+## v10.1.1 - Hotfix
+
+Five hotfix items rolled up on top of v10.1.0 Design. No new features, no architecture changes.
+
+
+### Vision routing
+
+- **Vision-capable model detection extended.** Gemma 3 (4B / 12B / 27B), Gemma 4 (E2B / E4B / 26B / 31B), LLaVA (7B / 13B / 34B / llama3 / phi3), Pixtral (12B / large), Qwen-VL / Qwen2-VL / Qwen2.5-VL, and MiniCPM-V are now recognised. Image inputs route to the configured vision model correctly.
+- **Explicit user override is respected.** If the user has set a Vision Model in Settings, it is used regardless of whether auto-detection knows about it. Auto-detection becomes a fallback, not a gate.
+- **Tool-call hardening.** Malformed tool-call JSON is parsed forgivingly (extracts the first valid JSON block from prose). On total failure, one explicit retry asks the model to return valid tool-call format. Tool execution errors are surfaced into the next LLM turn so the model cannot silently report success on a failed write or denied permission.
+
+### Chat history
+
+- **Mobile-origin badge.** Messages synced from Skales Mobile now show a small phone icon next to the timestamp. Tooltip reads "Sent from Skales Mobile". Read-only visual cue, no behavioural change.
+
+### Autopilot
+
+- **Activation modes.** Settings on the Autopilot page now include an Activation Mode picker with three options: Manual (legacy default - last toggle persists), On Startup (heartbeat starts automatically when Skales launches if the master switch is on), and Time Window (heartbeat is active during a user-defined daily 24-hour window such as 09:00 - 17:00). Time windows that cross midnight are supported (e.g. 22:00 - 06:00). Manual toggles inside an active window are respected for the rest of that window so a user can pause without fighting the auto-activation. Existing v10.1.0 users default to Manual and see no behaviour change unless they explicitly switch modes.
+
+
+### Notes
+
+- Auto-updater code is unchanged.
+- DNA invariants intact.
+
+---
+
+## v10.1.0 "Design" 
 
 The biggest creative update yet. Skales Studio gets a Design Tab that turns prompts into real HTML/CSS designs. Codework matures into a full autonomous coding agent. HF Spaces and MCP servers now work everywhere. Smoother animations across the app.
 

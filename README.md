@@ -28,7 +28,7 @@
   <sub>iOS & Android currently in Beta - Q2 2026</sub>
     </p>
 <p>
-    <a href="https://github.com/skalesapp/skales/releases/tag/v10.1.0"><img src="https://img.shields.io/badge/version-10.1.0-10b981?style=flat-square" alt="Version 10.1.0" /></a>
+    <a href="https://github.com/skalesapp/skales/releases/tag/v10.1.1"><img src="https://img.shields.io/badge/version-10.1.1-10b981?style=flat-square" alt="Version 10.1.1" /></a>
     <a href="https://skales.app"><img src="https://img.shields.io/badge/license-BSL_1.1-10b981?style=flat-square" alt="License" /></a>
     <a href="https://skales.app"><img src="https://img.shields.io/badge/Windows_+_macOS_+_Linux_+_Android-10b981?style=flat-square&logo=windows&logoColor=white" alt="Platform" /></a>
     <a href="https://github.com/skalesapp/skales/stargazers"><img src="https://img.shields.io/github/stars/skalesapp/skales?style=flat-square&color=10b981" alt="Stars" /></a>
@@ -118,7 +118,7 @@ Describe what you want and Lio builds it. Multi-AI architecting: One AI designs,
 <p align="center">
   <img src="https://skales.app/ss_0.gif" alt="Skales Studio - Design, Image, Video, Audio, Music" width="100%" />
 </p>
-Create designs, images, videos, voice, and music with AI from one place. **NEW in v10.1.0 — Design Tab**: type a prompt, pick a template (Landing Page, Dashboard, Mobile Screen, Pricing, Hero, Login, Settings), get production-ready HTML + CSS + Tailwind back. Live preview iframe, palette/font extraction, fullscreen mode, refine drawer, recent designs persist between sessions. Image generation via built-in Skales Visuals, Replicate, HuggingFace (now via the Inference Providers Router — SDXL/FLUX work again), DALL-E, ComfyUI (local), local Stable Diffusion, fal.ai. Video via Google Veo, Kling, Runway, fal.ai LTX-2.3 (text→video + image→video, 5/10s clips, native 9:16). 10 Style Presets, Camera Controls, dynamic model fetching. **HF Spaces and MCP servers are usable directly from Studio** as of v10.1.0. Export as HTML, PNG, MP4, or audio. Brand Kit keeps everything on-brand.
+Create designs, images, videos, voice, and music with AI from one place. Type a prompt, pick a template (Landing Page, Dashboard, Mobile Screen, Pricing, Hero, Login, Settings), get production-ready HTML + CSS + Tailwind back. Live preview iframe, palette/font extraction, fullscreen mode, refine drawer, recent designs persist between sessions. Image generation via built-in Skales Visuals, Replicate, HuggingFace (now via the Inference Providers Router — SDXL/FLUX work again), DALL-E, ComfyUI (local), local Stable Diffusion, fal.ai. Video via Google Veo, Kling, Runway, fal.ai LTX-2.3 (text→video + image→video, 5/10s clips, native 9:16). 10 Style Presets, Camera Controls, dynamic model fetching. **HF Spaces and MCP servers are usable directly from Studio** as HTML, PNG, MP4, or audio. Brand Kit keeps everything on-brand.
 
 ### 🗂️ Templates
 37 pre-built prompt templates across Chat, Codework, Organization, Lio AI, Browser, Planner, and Studio. Click to open the module with the prompt pre-filled. Build your own with the AI-guided Template Maker.
@@ -258,7 +258,7 @@ Like Spotify Wrapped for your AI. Auto-generates every Monday. Activities, top t
 
 12 Languages: EN, DE, ES, FR, IT, PT, KO, ZH, JA, VI, HR, TR.
 
-**Maintainer:** Mario Simic (solo founder, Vienna, Austria) — [@simicvm](https://github.com/simicvm).
+**Maintainer:** Mario Simic (solo founder, Vienna, Austria).
 
 **Contributors:** [@btafoya](https://github.com/btafoya), [@bmp-jaller](https://github.com/bmp-jaller), [@henk717](https://github.com/henk717), [@SohaibKhaliq](https://github.com/SohaibKhaliq), [@VladB-evs](https://github.com/VladB-evs), [@v33-kind](https://github.com/v33-kind), [@sidharth-vijayan](https://github.com/sidharth-vijayan), [@saagnik23](https://github.com/saagnik23), [@Kombowz](https://github.com/Kombowz), [@anthonytrance](https://github.com/anthonytrance), [@karelrokk-droid](https://github.com/karelrokk-droid), [@mclaudiopt](https://github.com/mclaudiopt), [@1Hackoon](https://github.com/1Hackoon), [@tbaumann](https://github.com/tbaumann), [@Derrick-xn](https://github.com/Derrick-xn) 
 
