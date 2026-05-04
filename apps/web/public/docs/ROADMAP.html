@@ -381,6 +381,196 @@
 <div class="content">
 
   <!-- ═══════════════════════════════════════════════
+       SHIPPED – v10.2.0 ITERATIVE QUALITY RELEASE
+  ════════════════════════════════════════════════ -->
+  <div class="release-header">
+    <span class="release-tag" style="color:var(--green);background:var(--green-dim);border-color:var(--green-border);">Shipped</span>
+    <div>
+      <div class="release-title">v10.2.0 <span style="font-size:0.75em;opacity:0.6;font-weight:400;">May 4, 2026</span></div>
+      <div class="release-sub">Iterative quality release across providers, modes, error UX, and chat history. No new product surfaces; existing surfaces become more resilient and configurable. Auto-updater pipeline unchanged.</div>
+    </div>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon">📐</div>
+      <div class="card-body">
+        <div class="card-title">Per-(provider, model) limits registry</div>
+        <div class="card-desc">Context window and max output tokens now read from a per-provider, per-model registry. Replaces the previous hardcoded 32K context fallback and 2048-4096 output ceilings across orchestrator, chat, autopilot, code-builder, browser-control, autonomous-runner. Live HF Router context_length values can override the static entry at call time.</div>
+        <div class="card-tags"><span class="tag">Providers</span><span class="tag">Architecture</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🗜️</div>
+      <div class="card-body">
+        <div class="card-title">Smart context compaction</div>
+        <div class="card-desc">When effective context exceeds 75% of budget, older turns are LLM-summarized via a single low-cost call instead of being truncated to 280 chars per message. Falls back to the truncation behaviour on summary failure. Upstream slice(-N) caps in chat.ts and chat/page.tsx replaced with byte-budgeted slices so compaction is actually reached.</div>
+        <div class="card-tags"><span class="tag">Chat</span><span class="tag">Performance</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔌</div>
+      <div class="card-body">
+        <div class="card-title">Multiple custom OpenAI-compatible endpoints</div>
+        <div class="card-desc">customProviders[] array supports more than one custom endpoint. Legacy providers.custom keeps working and is mirrored as customProviders[0] via a one-shot migration. Settings UI exposes label, base URL, API key, model, enabled toggle, tool-calling and vision toggles per entry.</div>
+        <div class="card-tags"><span class="tag">Providers</span><span class="tag">Settings</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🎯</div>
+      <div class="card-body">
+        <div class="card-title">Per-mode model resolution</div>
+        <div class="card-desc">Resolver chain: caller override → settings.modeOverrides[mode] → settings.activeProvider/model. Wired into Playground, Buddy, and exposed in Settings as a "Per-Mode Model Overrides" panel covering Chat, Codework, Organization, Studio, Playground, Buddy, Spotlight.</div>
+        <div class="card-tags"><span class="tag">Modes</span><span class="tag">Routing</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">⚡</div>
+      <div class="card-body">
+        <div class="card-title">Inline model picker in Chat</div>
+        <div class="card-desc">Compact icon-only button in the chat header opens an absolute overlay popup listing installed providers and curated models. Layout never shifts. Solid background respects light/dark theme. Custom agent provider/model wins over the global default. Removed entirely in Mini Mode.</div>
+        <div class="card-tags"><span class="tag">Chat</span><span class="tag">UX</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🚨</div>
+      <div class="card-body">
+        <div class="card-title">Provider error translator + Resume action</div>
+        <div class="card-desc">Raw provider errors become friendly toasts with one-click recovery: continue / retry on Ollama crashes and timeouts, compact on context-exceeded, switch-fallback on rate limits and quota errors, open-settings on auth failures. Pattern rules for Ollama, OpenRouter, Anthropic, OpenAI; generic fallback annotates with provider+status for debug.</div>
+        <div class="card-tags"><span class="tag">UX</span><span class="tag">Errors</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">📅</div>
+      <div class="card-body">
+        <div class="card-title">Calendar routing disambiguation</div>
+        <div class="card-desc">create_calendar_event description anchors against natural-language calendar phrasing ("in Google Cal", "in den Kalender", "gcal", "schedule a meeting at TIME"). planner_create_task description clarifies it is for autonomous Skales prompts, not human appointments. TASK ROUTING RULES gain a Calendar branch above Planner.</div>
+        <div class="card-tags"><span class="tag">Routing</span><span class="tag">Calendar</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🤖</div>
+      <div class="card-body">
+        <div class="card-title">Autopilot Master Switch persistence</div>
+        <div class="card-desc">Toggling the master switch from the Autopilot page (not just Settings) now persists isAutonomousMode atomically alongside heartbeat start/stop. Activate-on-Start works from a clean restart regardless of which UI surface the toggle came from.</div>
+        <div class="card-tags"><span class="tag">Autopilot</span><span class="tag">Bugfix</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🌐</div>
+      <div class="card-body">
+        <div class="card-title">Per-provider proxy support</div>
+        <div class="card-desc">Provider configs accept an optional proxy: { enabled, url } field. When set, requests to that provider go through an Undici ProxyAgent dispatcher. Cached per URL. Wired into chat.ts and orchestrator.ts hot paths. Schema is additive — existing settings.json files load unchanged.</div>
+        <div class="card-tags"><span class="tag">Providers</span><span class="tag">Networking</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">✂️</div>
+      <div class="card-body">
+        <div class="card-title">Manual delete and branch from any message</div>
+        <div class="card-desc">Hover actions on user and assistant message bubbles. Delete trims trailing tool messages so no orphan tool results remain. Branch creates a new session populated with messages up to the chosen point.</div>
+        <div class="card-tags"><span class="tag">Chat</span><span class="tag">UX</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔁</div>
+      <div class="card-body">
+        <div class="card-title">Continuation on output truncation</div>
+        <div class="card-desc">When a model returns finish_reason: 'length' with no further tool calls, the orchestrator injects "Continue from where you left off." and re-enters the ReAct loop instead of dropping the partial answer.</div>
+        <div class="card-tags"><span class="tag">Orchestrator</span><span class="tag">Reliability</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🌙</div>
+      <div class="card-body">
+        <div class="card-title">Friend Mode persistence + observability</div>
+        <div class="card-desc">In-memory cooldown timestamps are now persisted to settings and hydrated on restart, so app updates no longer reset proactive-message cooldowns. Every early-return point in the tick emits a structured console.warn for diagnostics.</div>
+        <div class="card-tags"><span class="tag">Autopilot</span><span class="tag">Friend Mode</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       SHIPPED – v10.1.1 HOTFIX
+  ════════════════════════════════════════════════ -->
+  <div class="release-header">
+    <span class="release-tag" style="color:var(--green);background:var(--green-dim);border-color:var(--green-border);">Shipped</span>
+    <div>
+      <div class="release-title">v10.1.1 &mdash; Hotfix <span style="font-size:0.75em;opacity:0.6;font-weight:400;">April 30, 2026</span></div>
+      <div class="release-sub">Discover Feed schema fix, defensive null-checks in entry rendering, expanded vision-capable model detection (Gemma 3, Gemma 4, LLaVA, Pixtral, Qwen-VL, MiniCPM-V), mobile-origin badge in chat history, mobile telemetry counters in admin dashboard.</div>
+    </div>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon">📰</div>
+      <div class="card-body">
+        <div class="card-title">Discover Feed schema fix</div>
+        <div class="card-desc">skalesinsider Text Posts now use a single text field (max 4000 chars) matching what the feed renderer expects. Link Posts use og_url / og_description / og_source. No more crashes from undefined fields.</div>
+        <div class="card-tags"><span class="tag">Discover</span><span class="tag">Bugfix</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🛡️</div>
+      <div class="card-body">
+        <div class="card-title">Defensive feed rendering</div>
+        <div class="card-desc">Entries missing text, og_url, or gif_url no longer crash the feed for the user. Optional chaining and length-guards wrap every field access.</div>
+        <div class="card-tags"><span class="tag">Discover</span><span class="tag">Resilience</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">👁️</div>
+      <div class="card-body">
+        <div class="card-title">Expanded vision-capable model detection</div>
+        <div class="card-desc">Gemma 3, Gemma 4, LLaVA, Pixtral, Qwen-VL, and MiniCPM-V now correctly route image inputs to the configured vision model. Explicit user-set Vision Model is always respected, even if the model is unknown to auto-detection.</div>
+        <div class="card-tags"><span class="tag">Vision</span><span class="tag">Routing</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">📱</div>
+      <div class="card-body">
+        <div class="card-title">Mobile-origin badge in chat history</div>
+        <div class="card-desc">Messages sent from Skales Mobile show a small phone icon next to the timestamp. Read-only visual cue, no behavioural change.</div>
+        <div class="card-tags"><span class="tag">Chat</span><span class="tag">Mobile</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">📊</div>
+      <div class="card-body">
+        <div class="card-title">Mobile telemetry counters</div>
+        <div class="card-desc">Admin dashboard now distinguishes Desktop, Mobile (iOS / Android), and Cross-Platform users. Discover gamertags carry created_via metadata for platform-of-creation tracking.</div>
+        <div class="card-tags"><span class="tag">Telemetry</span><span class="tag">Admin</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🕘</div>
+      <div class="card-body">
+        <div class="card-title">Autopilot activation modes</div>
+        <div class="card-desc">Three activation modes alongside the master switch: Manual (legacy default), On Startup (auto-start at app launch), and Time Window (active during a daily 24-hour window). Overnight windows like 22:00 - 06:00 are supported. Manual pauses inside an active window are honoured.</div>
+        <div class="card-tags"><span class="tag">Autopilot</span><span class="tag">Settings</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
        SHIPPED – v10.1.0 "DESIGN"
   ════════════════════════════════════════════════ -->
   <div class="release-header">
@@ -2190,7 +2380,7 @@
     <a href="https://skales.app">skales.app</a> ·
     <a href="https://github.com/skalesapp/skales">github.com/skalesapp/skales</a>
   </div>
-  <div style="margin-bottom: 8px; color: var(--text-dim); font-size: 12px;">Skales v<span data-skales-version>10.1.0</span> — Design</div>
+  <div style="margin-bottom: 8px; color: var(--text-dim); font-size: 12px;">Skales v<span data-skales-version>10.2.0</span></div>
   Made by <strong>Mario Simic</strong>
 </footer>
 

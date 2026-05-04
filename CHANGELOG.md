@@ -7,6 +7,80 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## v10.2.0
+
+Iterative quality release across providers, modes, error UX, and chat history. No new product surfaces; existing surfaces become more resilient and configurable. Auto-updater pipeline unchanged. DNA invariants intact.
+
+### Provider layer
+
+- **Per-(provider, model) limits registry.** Context window and max output tokens are now read from a per-provider, per-model registry (`lib/model-limits.ts`). Replaces the previous hardcoded ceilings (32K context fallback, 2048-4096 output) across orchestrator, chat, autopilot, code-builder, browser-control, autonomous-runner. Models that the registry doesn't know about fall through to per-provider defaults, then to a conservative absolute fallback. Live HF Router context_length values can override the static entry at call time.
+- **Smart context compaction with LLM summary.** When effective context exceeds 75% of budget, older turns are summarized via a single low-cost LLM call (`noTools: true`, 600 tokens) instead of being truncated to 280 characters per message. Falls back to the truncation behaviour if the summary call fails. Compaction is now reached by the orchestrator: upstream `slice(-40)` and `slice(-20)` history caps in chat.ts and chat/page.tsx are replaced with a byte-budgeted slice (default 8MB / 4MB / 1MB / 512KB depending on entry path).
+- **Provider error translation.** New `lib/error-translator.ts` converts raw 5xx/4xx response bodies into actionable user messages. Pattern rules cover Ollama (`llama runner has terminated`, `cuda out of memory`, missing models, unreachable host), OpenRouter (rate limits, missing credit), Anthropic (context exceeded, auth failed), OpenAI (context exceeded, quota). Each translation carries a `toastAction` (continue / retry / compact / switch-fallback / open-settings) consumed by chat error toasts. Generic fallback annotates with provider+status for debug logs.
+- **Per-provider proxy support.** Provider configs accept an optional `proxy: { enabled, url }` field. When set, requests to that provider go through an Undici `ProxyAgent` dispatcher. Cached per URL. Wired into chat.ts (OpenAI-compatible / Anthropic / Google) and orchestrator.ts (agentDecide hot paths). Schema change is additive — existing settings.json files load unchanged.
+- **Multiple custom OpenAI-compatible endpoints.** New `customProviders[]` array in settings supports more than one custom endpoint at a time. Legacy `providers.custom` continues to work and is mirrored as `customProviders[0]` via a one-shot migration. Settings UI exposes label, base URL, API key, model, enabled toggle, tool-calling and vision toggles per entry.
+
+### Modes
+
+- **Per-mode model resolution contract.** New `lib/mode-routing.ts` resolves which (provider, model) each Skales mode uses: explicit caller override → `settings.modeOverrides[mode]` → `settings.activeProvider/model`. Wired into Playground (askAI + generate), Buddy chat, and exposed in Settings as a "Per-Mode Model Overrides" panel covering Chat, Codework, Organization, Studio, Playground, Buddy, Spotlight.
+- **Playground respects active model.** The previous silent override to Anthropic Sonnet 4.5 is now an opt-in setting (`playgroundQualityBoost`, default OFF). When OFF, Playground uses the active provider/model or the per-mode override. Toggle and per-conversation provider/model picker now live on the Playground page header.
+- **Inline model picker in Chat.** Compact icon-only button in the chat header opens an absolute overlay popup listing installed providers and curated models. Layout never shifts. Solid background respects the active light/dark theme. Custom agent provider/model wins over the global default in the "Use agent default" row. Picker is removed entirely in Mini Mode.
+- **Chat command `/model <id>` persists.** The slash command now writes the new model to `providers[activeProvider].model` via `saveAllSettings`, refreshes the local settings state, and surfaces a clear error bubble on save failure. Cached invalid model IDs no longer survive `/model` switches.
+
+### Tools and routing
+
+- **Calendar routing disambiguation.** `create_calendar_event` description anchors against natural-language calendar phrasing ("in Google Cal", "in den Kalender", "gcal", "schedule a meeting at TIME"). `planner_create_task` description clarifies it is for autonomous Skales prompts, not human appointments. TASK ROUTING RULES block in the orchestrator system prompt gains a Calendar branch above the Planner branch. Internal Planner is unchanged in scope.
+- **Tavily gate respects user toggle.** When the Tavily skill is disabled or no Tavily API key is configured, `search_web` is filtered out of the tool manifest before it reaches the LLM. Other web tools (`fetch_web_page`, `extract_web_text`) remain enabled.
+- **Tool prune for low-TPM providers.** `shouldPruneTools` auto-fires for providers with TPM ceilings under 15K (Groq 12K), pruning the 136-entry tool manifest from the request even when the user message is non-trivial. Prevents 413 "request too large" errors on free tiers.
+
+### Autopilot
+
+- **Master Switch persists from the Autopilot page.** Toggling the master switch from the Autopilot page (not just Settings) now persists `isAutonomousMode` atomically alongside heartbeat start/stop. Activate-on-Start works from a clean restart regardless of which UI surface the toggle came from.
+- **Friend Mode observability and persistent cooldown.** Every early-return point in `tickFriendMode` emits a structured `console.warn('[friend-mode] skip', { reason, ... })`. Tick start logs the active behavior. The in-memory `friendModeLastSentAt` Map is hydrated from settings on first tick and persisted after each successful send so app restarts no longer reset cooldown.
+- **Identity maintenance auto-approve.** Optional Settings toggle. When enabled, the 3 AM identity maintenance job bypasses the safe-mode and critical-action approval gates. Logged to the audit trail. Default OFF.
+
+### Chat UX
+
+- **Manual delete and branch from any message.** Hover actions on user and assistant message bubbles. Delete trims trailing tool messages so no orphan tool results remain. Branch creates a new session populated with messages up to the chosen point.
+- **Resume action on error toasts.** Provider error toasts now carry an action button keyed by the error type: continue / retry on Ollama crashes and timeouts, compact on context-exceeded errors, switch-fallback on rate limits and quota errors, open-settings on auth failures. Wired into orchestrator errors, vision flow errors, and approval-result errors.
+- **Continuation on output truncation.** When a model returns `finish_reason: 'length'` with no further tool calls, the orchestrator injects "Continue from where you left off." and re-enters the ReAct loop instead of dropping the partial answer.
+
+### Settings UX
+
+- **3-fallback UI cap removed.** The Fallback Chain section accepts as many entries as the schema does. Comment in `actions/chat.ts` updated.
+- **Per-Mode Model Overrides panel.** New section under AI Providers. Per mode: "Use active model" toggle plus provider+model dropdowns when the override is on. Empty entries are not persisted.
+- **Additional Custom Providers panel.** New section under Advanced. Each entry is a card with label, base URL, API key, model, enabled, tool-calling, vision toggles. Add and remove buttons. Legacy single-slot Custom Provider UI continues to work.
+- **Identity Maintenance Auto-approve toggle.** Lives under Autopilot in v10.2.0. Will move under Settings → Memory near the existing identity maintenance controls in a follow-up.
+
+### Discover
+
+- **Layout fixes for long-form posts.** Post text wraps on long URLs (`break-words` + `overflow-wrap: anywhere`). Category badges truncate at 140px. Header row wraps when content is wide. Skales Insider posts no longer break the feed layout.
+
+### Telegram
+
+- **Approval flow shows continuation hint.** After a Telegram-approved tool runs, the result message ends with "🔄 Tap or send Continue to resume." so the user knows the agent flow is paused, not finished. Optional `telegramApprovalAutoResume` setting (default OFF) lets the agent re-enter the ReAct loop automatically; on by user choice only, since it carries the historical risk of v7.2.1 infinite-loop regression.
+
+### Updater notifications
+
+- **Changelog field carries through IPC.** `electron/updater.js` now emits both `releaseNotes` (legacy) and `changelog` (new) on the IPC payload for `update-available` and `update-downloaded`. Renderer reads either. Update page renders the changelog whether the trigger came from server-side check or auto-detect IPC.
+
+### Localization
+
+- 11 new `system.errors.*` keys for the provider error translator, plus 3 new `chat.modelPicker.*` keys for the inline picker, with real translations across all 12 locales (de, en, es, fr, hr, ja, ko, pt, ru, tr, vi, zh). Locale parity 12 × 3989.
+
+### Internal
+
+- New shared utilities: `lib/model-limits.ts`, `lib/byte-budgeted-slice.ts`, `lib/mode-routing.ts`, `lib/error-translator.ts`, `lib/proxy-dispatcher.ts`, `lib/custom-providers.ts`, `lib/curated-models.ts`.
+
+### Notes
+
+- Auto-updater code path is unchanged. The `electron/updater.js` edit is one additive line emitting `changelog` alongside the legacy `releaseNotes` field.
+- DNA invariants intact.
+- Settings schema additions (`customProviders`, `modeOverrides`, `playgroundQualityBoost`, `identityMaintenanceAutoApprove`, `telegramApprovalAutoResume`, `proxy` per provider) are all OPTIONAL with safe defaults. Existing settings.json files load unchanged.
+- BSL `_responseQuality` consumption hardened: authorized builds get the full registry value, unauthorized builds are hard-capped at 4096 tokens regardless of model.
+
+---
+
+
 ## v10.1.1 - Hotfix
 
 Five hotfix items rolled up on top of v10.1.0 Design. No new features, no architecture changes.
