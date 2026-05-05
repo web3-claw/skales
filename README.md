@@ -28,7 +28,7 @@
   <sub>iOS & Android currently in Beta - Q2 2026</sub>
     </p>
 <p>
-    <a href="https://github.com/skalesapp/skales/releases/tag/v10.2.0"><img src="https://img.shields.io/badge/version-10.2.0-10b981?style=flat-square" alt="Version 10.2.0" /></a>
+    <a href="https://github.com/skalesapp/skales/releases/tag/v10.2.2"><img src="https://img.shields.io/badge/version-10.2.2-10b981?style=flat-square" alt="Version 10.2.2" /></a>
     <a href="https://skales.app"><img src="https://img.shields.io/badge/license-BSL_1.1-10b981?style=flat-square" alt="License" /></a>
     <a href="https://skales.app"><img src="https://img.shields.io/badge/Windows_+_macOS_+_Linux_+_Android-10b981?style=flat-square&logo=windows&logoColor=white" alt="Platform" /></a>
     <a href="https://github.com/skalesapp/skales/stargazers"><img src="https://img.shields.io/github/stars/skalesapp/skales?style=flat-square&color=10b981" alt="Stars" /></a>
@@ -38,7 +38,7 @@
     Chat, code autonomously, create images & videos, control your desktop, browse the web, organize multi-agent teams, manage calendars, send emails, and automate your day.
   </p>
 
-  <p><sub><b>What's new in 10.2</b> — per-model context and output limits across all providers, smart LLM-based context compaction, multiple custom OpenAI-compatible endpoints, per-mode model overrides, inline model picker in Chat, friendly error toasts with one-click recovery, and more. <a href="./CHANGELOG.md">Full changelog →</a></sub></p>
+  <p><sub><b>What's new in 10.2.2</b> — live model fetch for cloud providers (Anthropic, OpenAI, Google, Groq, DeepSeek, Mistral, xAI, Together, MiniMax, Cloudflare, NVIDIA, SambaNova, Cerebras), user-configurable model limits, per-provider proxy fix, manual message delete that persists, Branch action that creates the right slice, real-data Per-Mode Model Override UI, picker hides on mobile-size viewports. <a href="./CHANGELOG.md">Full changelog →</a></sub></p>
 
  <p>If you find this useful, a ⭐ helps others discover it</p>
   <p>
@@ -261,9 +261,8 @@ Like Spotify Wrapped for your AI. Auto-generates every Monday. Activities, top t
 
 **Maintainer:** Mario Simic (solo founder, Vienna, Austria).
 
-**Contributors:** [@btafoya](https://github.com/btafoya), [@bmp-jaller](https://github.com/bmp-jaller), [@henk717](https://github.com/henk717), [@SohaibKhaliq](https://github.com/SohaibKhaliq), [@VladB-evs](https://github.com/VladB-evs), [@v33-kind](https://github.com/v33-kind), [@sidharth-vijayan](https://github.com/sidharth-vijayan), [@saagnik23](https://github.com/saagnik23), [@Kombowz](https://github.com/Kombowz), [@anthonytrance](https://github.com/anthonytrance), [@karelrokk-droid](https://github.com/karelrokk-droid), [@mclaudiopt](https://github.com/mclaudiopt), [@1Hackoon](https://github.com/1Hackoon), [@tbaumann](https://github.com/tbaumann), [@Derrick-xn](https://github.com/Derrick-xn) 
+**Contributors:** [@btafoya](https://github.com/btafoya), [@bmp-jaller](https://github.com/bmp-jaller), [@henk717](https://github.com/henk717), [@SohaibKhaliq](https://github.com/SohaibKhaliq), [@VladB-evs](https://github.com/VladB-evs), [@v33-kind](https://github.com/v33-kind), [@sidharth-vijayan](https://github.com/sidharth-vijayan), [@saagnik23](https://github.com/saagnik23), [@Kombowz](https://github.com/Kombowz), [@anthonytrance](https://github.com/anthonytrance), [@karelrokk-droid](https://github.com/karelrokk-droid), [@mclaudiopt](https://github.com/mclaudiopt), [@1Hackoon](https://github.com/1Hackoon), [@tbaumann](https://github.com/tbaumann), [@Derrick-xn](https://github.com/Derrick-xn) [@NikiKeyz](https://github.com/NikiKeyz) 
 
-Want to contribute? See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 [Discussions](https://github.com/skalesapp/skales/discussions) · [Bug Reports](https://github.com/skalesapp/skales/issues)
 

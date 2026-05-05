@@ -361,7 +361,7 @@
       <div class="logo-mark">S</div>
       <div>
         <div class="logo-text">Skales</div>
-        <div class="logo-version">v<span data-skales-version>10.2.0</span> User Guide</div>
+        <div class="logo-version">v<span data-skales-version>10.2.2</span> User Guide</div>
       </div>
     </a>
 
@@ -444,7 +444,7 @@
 
     <!-- Hero -->
     <div class="hero">
-      <div class="hero-badge">📖 Official Documentation · v<span data-skales-version>10.2.0</span></div>
+      <div class="hero-badge">📖 Official Documentation · v<span data-skales-version>10.2.2</span></div>
       <h1>Skales <span>User Guide</span></h1>
       <p>Your personal AI operating system. Chat, automate, create — all running locally on your machine.</p>
     </div>
@@ -576,6 +576,10 @@
       <div class="tip"><strong>💡 Local AI Setup:</strong> Need help setting up local models? See our step-by-step guides: <a href="setup-koboldcpp.html" style="color:var(--accent)">KoboldCpp Setup</a> · <a href="setup-lmstudio.html" style="color:var(--accent)">LM Studio Setup</a></div>
 
       <div class="tip"><strong>💡 Tip:</strong> You can configure multiple providers and switch between them mid-session. Use <code>/model gpt-4o</code> or the model picker in the chat toolbar.</div>
+
+      <div class="tip"><strong>🔄 Live model fetch (v10.2.2):</strong> Each provider card has a Refresh button that pulls the current model list directly from the provider's API. The cached list is preferred over the built-in baseline, so newly released models become usable without waiting for a Skales release. Supported providers: Anthropic, OpenAI, Google Gemini, Groq, DeepSeek, Mistral, xAI, Together, MiniMax, Cloudflare, NVIDIA, SambaNova, Cerebras (plus the existing OpenRouter, Ollama, and Custom Endpoint flows).</div>
+
+      <div class="tip"><strong>⚙️ Override Model Limits (v10.2.2, power user):</strong> Settings → AI Providers → Override Model Limits. Add per-(provider, model) override rows for context and output token caps. Use <code>*</code> as the model name for a provider-wide wildcard. Useful when a brand-new model has different limits than the built-in registry — no Skales update required.</div>
     </section>
 
     <!-- Chat -->
@@ -1704,7 +1708,7 @@
     </section>
 
     <footer>
-      <span>Skales v<span data-skales-version>10.2.0</span> — © 2024–2026 Mario Simic — BSL 1.1</span>
+      <span>Skales v<span data-skales-version>10.2.2</span> — © 2024–2026 Mario Simic — BSL 1.1</span>
       <a href="https://skales.app">skales.app</a>
     </footer>
 

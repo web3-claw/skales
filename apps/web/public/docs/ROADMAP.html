@@ -381,6 +381,111 @@
 <div class="content">
 
   <!-- ═══════════════════════════════════════════════
+       SHIPPED – v10.2.2 COMBINED HOTFIX + FEATURES
+       (v10.2.1 was rolled into v10.2.2)
+  ════════════════════════════════════════════════ -->
+  <div class="release-header">
+    <span class="release-tag" style="color:var(--green);background:var(--green-dim);border-color:var(--green-border);">Shipped</span>
+    <div>
+      <div class="release-title">v10.2.2 &mdash; Combined Hotfix + Features <span style="font-size:0.75em;opacity:0.6;font-weight:400;">May 5, 2026</span></div>
+      <div class="release-sub">v10.2.1 hotfix items plus live model fetch and user-configurable model limits, shipped together. Auto-updater pipeline unchanged. DNA invariants intact. Locale parity preserved.</div>
+    </div>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon">🔄</div>
+      <div class="card-body">
+        <div class="card-title">Live model fetch for cloud providers</div>
+        <div class="card-desc">Each provider card in Settings → AI Providers has a Refresh button that hits /v1/models (or the vendor equivalent). Anthropic, OpenAI, Google Gemini, Groq, DeepSeek, Mistral, xAI, Together, MiniMax, Cloudflare, NVIDIA, SambaNova, and Cerebras supported. Result persists to settings.modelCache; every model dropdown prefers the cached list over the hardcoded baseline. New models become usable without a Skales release.</div>
+        <div class="card-tags"><span class="tag">Providers</span><span class="tag">Settings</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">⚙️</div>
+      <div class="card-body">
+        <div class="card-title">Override model limits (power user)</div>
+        <div class="card-desc">Settings → AI Providers → Override Model Limits. Add per-(provider, model) override rows for context and output token caps. Use * as the model name for a provider-wide wildcard. Resolves ahead of the static lib/model-limits registry via a 5s in-process cache of settings.modelLimits. Useful for newly released models whose limits differ from the built-in registry.</div>
+        <div class="card-tags"><span class="tag">Providers</span><span class="tag">Settings</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🌐</div>
+      <div class="card-body">
+        <div class="card-title">Per-provider proxy actually routes</div>
+        <div class="card-desc">v10.2.0 declared the feature but the dispatcher was not reaching the fetch calls — the standalone Next.js build did not include the undici package, so the runtime require returned undefined silently. Fixed by making undici an explicit dependency, switching the dispatcher to a proper import, and externalizing it in next.config.mjs so Webpack does not parse undici's private class fields.</div>
+        <div class="card-tags"><span class="tag">Providers</span><span class="tag">Bugfix</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🗑️</div>
+      <div class="card-body">
+        <div class="card-title">Manual delete persists</div>
+        <div class="card-desc">v10.2.0 trimmed the in-memory message array but did not propagate the deletion to disk. Fixed by saving the trimmed session explicitly from the delete handler. Buddy-poll dedup baseline updated in step so the poll does not re-inject removed messages.</div>
+        <div class="card-tags"><span class="tag">Chat</span><span class="tag">Bugfix</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🌳</div>
+      <div class="card-body">
+        <div class="card-title">Branch action creates the right slice</div>
+        <div class="card-desc">v10.2.0 surfaced the Branch hover button on chat bubbles but the slice index was wrong — the new session contained a different subset than the user expected. Fixed end-to-end: clicking Branch on the Nth message creates a new session with messages 1 through N inclusive. Snapshot is captured up-front so re-renders cannot shift the slice mid-handler.</div>
+        <div class="card-tags"><span class="tag">Chat</span><span class="tag">Bugfix</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🌍</div>
+      <div class="card-body">
+        <div class="card-title">Bubble action labels and toasts translated</div>
+        <div class="card-desc">A handful of chat.bubble.* locale keys shipped without translations in v10.2.0 — the Branch toast, the Delete tooltip, and the Branch error showed raw key strings. Real translations added across all 12 locales (en, de, es, fr, hr, ja, ko, pt, ru, tr, vi, zh).</div>
+        <div class="card-tags"><span class="tag">i18n</span><span class="tag">Locale</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🎯</div>
+      <div class="card-body">
+        <div class="card-title">Per-Mode Override uses real provider data</div>
+        <div class="card-desc">Settings → Per-Mode Model Overrides previously showed a hardcoded curated list regardless of what the user had configured. Now uses the same getCuratedModels() helper as the chat header and Playground pickers — provider dropdown lists only enabled providers with API keys, model dropdown reflects configured + curated models for the chosen provider, plus a free-text fallback for off-list models.</div>
+        <div class="card-tags"><span class="tag">Settings</span><span class="tag">UX</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔄</div>
+      <div class="card-body">
+        <div class="card-title">Playground picker syncs with Settings</div>
+        <div class="card-desc">Playground on-page model picker and Settings Per-Mode Override now share the same source of truth (settings.modeOverrides.playground). A small window-event bus fires after each save so the other surface re-hydrates instead of going stale until reload.</div>
+        <div class="card-tags"><span class="tag">Settings</span><span class="tag">Sync</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">📱</div>
+      <div class="card-body">
+        <div class="card-title">Header pickers hide on small viewports</div>
+        <div class="card-desc">Chat header and Playground header model pickers hide below 768px. Matches the existing Mini Mode behavior — at iPhone widths the picker cluttered the chat header without serving a clear purpose.</div>
+        <div class="card-tags"><span class="tag">UI</span><span class="tag">UX</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">❓</div>
+      <div class="card-body">
+        <div class="card-title">Settings page no longer shows the Agents help trigger</div>
+        <div class="card-desc">The "Skales agents at a glance" trigger on the Settings page was removed. It belongs on the Agents page only, which is unchanged.</div>
+        <div class="card-tags"><span class="tag">Settings</span><span class="tag">UX</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
        SHIPPED – v10.2.0 ITERATIVE QUALITY RELEASE
   ════════════════════════════════════════════════ -->
   <div class="release-header">
@@ -2072,6 +2177,46 @@
 
   <div class="card-grid">
     <div class="card">
+      <div class="card-icon">⚡</div>
+      <div class="card-body">
+        <div class="card-title">Quick-refresh in chat header picker (v10.3)</div>
+        <div class="card-desc">Hook the v10.2.2 live model fetch into the chat header picker so users can refresh the model list without opening Settings. Same cache, same fallback to the hardcoded baseline.</div>
+      </div>
+      <div class="card-status status-open">Coming Soon</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🌐</div>
+      <div class="card-body">
+        <div class="card-title">Per-card proxy UI for every provider (v10.3)</div>
+        <div class="card-desc">Per-provider proxy is currently configurable only via settings.json edits. v10.3 surfaces it as a UI toggle and URL field on each provider card — same dispatcher path that v10.2.2 hardened.</div>
+      </div>
+      <div class="card-status status-open">Coming Soon</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔁</div>
+      <div class="card-body">
+        <div class="card-title">Multi-Custom-Provider Fallback Chain (v10.3)</div>
+        <div class="card-desc">Wire the v10.2.0 customProviders[] array into the existing fallback chain so power users can chain multiple OpenAI-compatible endpoints alongside cloud providers.</div>
+      </div>
+      <div class="card-status status-open">Coming Soon</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🤖</div>
+      <div class="card-body">
+        <div class="card-title">Skales as a true daemon (v11, planning)</div>
+        <div class="card-desc">Persistent goal system, improved long-term memory, messaging gateway expansion. Early planning — concrete shape and scope still in design.</div>
+      </div>
+      <div class="card-status status-planned">Future</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">📱</div>
+      <div class="card-body">
+        <div class="card-title">Mobile — iOS Beta and Android Closed Testing</div>
+        <div class="card-desc">iOS Beta progressing through Apple Review. Android Closed Testing live and expanding. Same Skales pairing flow, same provider stack.</div>
+      </div>
+      <div class="card-status status-open">Coming Soon</div>
+    </div>
+    <div class="card">
       <div class="card-icon">📊</div>
       <div class="card-body">
         <div class="card-title">Smart Morning Dashboard</div>
@@ -2380,7 +2525,7 @@
     <a href="https://skales.app">skales.app</a> ·
     <a href="https://github.com/skalesapp/skales">github.com/skalesapp/skales</a>
   </div>
-  <div style="margin-bottom: 8px; color: var(--text-dim); font-size: 12px;">Skales v<span data-skales-version>10.2.0</span></div>
+  <div style="margin-bottom: 8px; color: var(--text-dim); font-size: 12px;">Skales v<span data-skales-version>10.2.2</span></div>
   Made by <strong>Mario Simic</strong>
 </footer>
 

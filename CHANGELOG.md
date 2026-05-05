@@ -7,6 +7,40 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## v10.2.2
+
+Combined hotfix + feature release. v10.2.1 was rolled into this version. Auto-updater pipeline unchanged. DNA invariants intact.
+
+### Provider layer
+
+- **Live model fetch for cloud providers.** Each provider card in Settings → AI Providers now has a Refresh button. Anthropic, OpenAI, Google Gemini, Groq, DeepSeek, Mistral, xAI, Together, MiniMax, Cloudflare, NVIDIA, SambaNova, and Cerebras all expose `/v1/models` (or the equivalent vendor-specific endpoint). Clicking refresh stores the live list in `settings.modelCache[provider]`. Model dropdowns prefer the cached list when present and fall back to the built-in baseline. New models become usable without a Skales release.
+- **User-configurable model limits.** New collapsible "Override Model Limits" section under AI Providers. Add per-(provider, model) override rows for context and output token caps. Use `*` as the model name to apply the limit to all models of that provider that don't have an explicit override. Useful for newly released models whose limits differ from the built-in registry. Resolves ahead of the static registry in `lib/model-limits.ts` via a 5s in-process cache of `settings.modelLimits`.
+- **Per-provider proxy now actually routes.** v10.2.0 declared the feature but the dispatcher was not reaching the fetch calls — the standalone Next.js build did not include the undici package, so the runtime require returned undefined silently. Fixed by making undici an explicit dependency, switching to a proper import, and externalizing it in the Next.js webpack config.
+
+### Chat
+
+- **Manual message delete persists across reload and restart.** v10.2.0 trimmed the in-memory message array but did not propagate the deletion to disk. The delete handler now explicitly saves the trimmed session.
+- **Branch action creates the correct slice.** v10.2.0 surfaced the Branch hover button on chat bubbles but the slice index was wrong — the new session contained a different subset than the user expected. Fixed end-to-end: clicking Branch on the Nth message creates a new session with messages 1 through N inclusive.
+- **Bubble action labels and toasts are translated.** A handful of `chat.bubble.*` locale keys shipped without translations in v10.2.0 — the Branch toast and the Delete confirmation showed raw key strings. Real translations added across all 12 locales.
+
+### Settings
+
+- **Per-Mode Model Override UI uses real provider data.** The dropdowns previously showed a hardcoded curated list regardless of what the user had configured. Now mirrors the chat header picker: provider list shows only enabled providers with API keys, model list reflects the user's configured plus live-fetched models for the chosen provider.
+- **Playground on-page picker and Settings Per-Mode Override share the same source of truth.** Both write to `settings.modeOverrides.playground` and re-hydrate from disk on every settings-change event.
+- **The "?" agents-info trigger no longer appears on the Settings page.** It belongs on the Agents page only — which is unchanged.
+
+### UI
+
+- **Chat and Playground header model pickers hide on small viewports.** Below 768px the picker is hidden entirely, matching the existing Mini Mode behavior.
+
+### Notes
+
+- Auto-updater code path is unchanged.
+- DNA invariants intact.
+- Schema additions (`modelCache`, `modelLimits` on top of v10.2.0's existing additions) are all OPTIONAL with safe defaults. Existing `settings.json` files load unchanged.
+- 12-locale parity preserved.
+
+
 ## v10.2.0
 
 Iterative quality release across providers, modes, error UX, and chat history. No new product surfaces; existing surfaces become more resilient and configurable. Auto-updater pipeline unchanged. DNA invariants intact.
@@ -447,8 +481,6 @@ The biggest Skales release ever. Desktop + Mobile + Relay now form one ecosystem
 - Tool deduplication prevents duplicate function declaration errors
 - Tool-awareness warning for local models with tools disabled
 
-### Contributors
-- @Kombowz — local model testing, Ollama/LM Studio QA
 
 
 ## v9.2.3 — File Operations & Stability (April 2026)
@@ -551,7 +583,6 @@ The biggest Skales release ever. Desktop + Mobile + Relay now form one ecosystem
 - DNA markers verified intact
 - TypeScript: zero errors (`tsc --noEmit` clean)
 - New files: `lib/studio/video-providers.ts`, `api/studio/video/generate-cloud/route.ts`, `lib/elementor-templates.ts`
-- Contributors: sidharth-vijayan, saagnik23
 
 
 ## v9.2.0 — "The Bridge" (April 2026)
@@ -619,7 +650,6 @@ The biggest Skales release ever. Desktop + Mobile + Relay now form one ecosystem
 - Playwright detection unified (dynamic version scanning)
 - DNA markers verified intact
 - WordPress plugin: skales-wordpress/ (MIT license, kses filters bypassed for full HTML)
-- CONTRIBUTORS.md added
 
 ---
 
@@ -1103,10 +1133,7 @@ playbook_run, playbook_list
 - **Local STT Endpoint:** Voice transcription can use local Whisper (KoboldCpp).
 - **Local Image Generation:** Configurable image generation endpoint alongside Replicate.
 
-### Contributors
-- @bmp-jaller - IPv6 localhost fix
-- @henk717 - KoboldCpp feedback shaping the local AI experience
-- @btafoya - Linux testing
+
 
 ## v7.0.1 — Hotfix (March 2026)
 
