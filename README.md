@@ -28,7 +28,7 @@
   <sub>iOS & Android currently in Beta - Q2 2026</sub>
     </p>
 <p>
-    <a href="https://github.com/skalesapp/skales/releases/tag/v10.2.2"><img src="https://img.shields.io/badge/version-10.2.2-10b981?style=flat-square" alt="Version 10.2.2" /></a>
+    <a href="https://github.com/skalesapp/skales/releases/tag/v10.2.5"><img src="https://img.shields.io/badge/version-10.2.5-10b981?style=flat-square" alt="Version 10.2.5" /></a>
     <a href="https://skales.app"><img src="https://img.shields.io/badge/license-BSL_1.1-10b981?style=flat-square" alt="License" /></a>
     <a href="https://skales.app"><img src="https://img.shields.io/badge/Windows_+_macOS_+_Linux_+_Android-10b981?style=flat-square&logo=windows&logoColor=white" alt="Platform" /></a>
     <a href="https://github.com/skalesapp/skales/stargazers"><img src="https://img.shields.io/github/stars/skalesapp/skales?style=flat-square&color=10b981" alt="Stars" /></a>
@@ -38,7 +38,7 @@
     Chat, code autonomously, create images & videos, control your desktop, browse the web, organize multi-agent teams, manage calendars, send emails, and automate your day.
   </p>
 
-  <p><sub><b>What's new in 10.2.2</b> — live model fetch for cloud providers (Anthropic, OpenAI, Google, Groq, DeepSeek, Mistral, xAI, Together, MiniMax, Cloudflare, NVIDIA, SambaNova, Cerebras), user-configurable model limits, per-provider proxy fix, manual message delete that persists, Branch action that creates the right slice, real-data Per-Mode Model Override UI, picker hides on mobile-size viewports. <a href="./CHANGELOG.md">Full changelog →</a></sub></p>
+  <p><sub><b>What's new in 10.2.5</b> — skill toggles now actually work (latent bug fixed across orchestrator), Playground per-mode override persistence, MCP state reporting, KaTeX math rendering, edit/branch/delete on user messages, manual compact button, code block copy, Ctrl+A scoping, responsive header polish, defense-in-depth cli/mcp auth. <a href="./CHANGELOG.md">Full changelog →</a></sub></p>
 
  <p>If you find this useful, a ⭐ helps others discover it</p>
   <p>

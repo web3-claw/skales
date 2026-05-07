@@ -7,6 +7,42 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## v10.2.5
+
+Stability and polish release across nine sprint sessions. No new product surfaces. Auto-updater pipeline unchanged. DNA invariants intact.
+
+### Bug Fixes (Critical)
+
+- **Skills system.** Fixed 29 broken reads in the orchestrator that caused all skill toggles to be silently ignored since the skills feature shipped. Computer Use Tools, Calendar Reminders, and other skills now actually function when toggled. (S2c)
+- **UI Skill Toggles.** Toggles persist across restart. Previously, toggles appeared to switch on but reverted after reload due to camelCase / snake_case key drift. Silent backend errors now trigger UI rollback instead of being ignored. (S2e, OF-1)
+- **Playground Override Persistence.** "Use active model" for per-mode overrides no longer springs back to the previous selection after Save. Root cause was Next.js Server Action serialization stripping `undefined` values. (S5 K1)
+- **MCP State Reporting.** The model reports MCP server status correctly instead of always claiming "off". (S2a)
+- **MCP Backend `listServersForCli`.** Returns real per-server status (disabled / connected / stopped / error) instead of hardcoded "connected" with 0 tools. (S2b)
+- **Calendar Reminders Endpoint.** Was permanently skipped due to the broken `settings.skills` field. Now reads from skills.json correctly. (S2d C5)
+- **Proxy Dispatcher.** All 12 provider sites use undiciFetch for proxy-aware HTTP. Runtime ECONNREFUSED errors with proxy enabled are gone. (S1 A2)
+- **Token Cap Cloudflare / NVIDIA.** 32K → real 128K. (S1 A3a)
+
+### Features
+
+- **KaTeX Math Rendering.** Inline `$E=mc^2$` and block `$$...$$` render as actual mathematics. (S4b F1)
+- **Edit / Branch / Delete on User Messages.** Hover actions on user bubbles. Edit triggers truncate-and-resend. Branch creates a new chat from that point. Delete removes the message and all subsequent responses. (S4b F2)
+- **Manual Compact Button.** Compress chat history on demand instead of waiting for the 75% auto-threshold. (S4b F3)
+- **Token Split Tooltip.** Hover the token badge to see "X.XK input / Y.YK output". Default display unchanged. (S4b F4)
+- **Code Block Copy.** Hover any code block to reveal a Copy button. 2-second "Copied!" feedback. (S4b F5)
+- **Code Block Ctrl+A Scoping.** Ctrl/Cmd+A inside a code block selects only that block, not the whole window. Works for Markdown code blocks AND HTML preview blocks. (S4b F6, S4d J3)
+- **HTML Preview Copy.** Copy button added to the HTML preview header alongside Download HTML. (S4c I1)
+- **Identity Maintenance Toggle.** Moved to its dedicated section in Settings (was buried under Agent & Tasks). (S5 K4)
+
+### Stability / Polish
+
+- **Header Responsive Layout.** Buttons collapse to icon-only below 1280px viewport with native tooltips on hover. Header no longer breaks on tablet portrait or narrow desktop. (S4d J1)
+- **Provider Switcher Dropdown.** Anchors correctly in chat AND playground. No more left-side cutoff. (S4d J2)
+- **Compact Button hidden in Mini Mode.** Mini Mode stays minimal. (S4c I3)
+- **Compaction Few-Shot Memory.** Last 6 tool calls preserved as few-shot examples after auto-compact. (S1 A4)
+- **MCPClient Error Sink.** Default error event handler prevents Node crashes when MCP servers misbehave. (S5 K10)
+- **Token Display Tooltip.** Power users see input / output split, casual users see unchanged total. (S4b F4)
+
+
 ## v10.2.2
 
 Combined hotfix + feature release. v10.2.1 was rolled into this version. Auto-updater pipeline unchanged. DNA invariants intact.
