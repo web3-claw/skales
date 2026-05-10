@@ -41,10 +41,16 @@
 <body>
 
   <h1>Skales <span>Roadmap</span></h1>
-  <p class="subtitle">What's shipped, what's next. Updated May 8, 2026.</p>
+  <p class="subtitle">What's shipped, what's next. Updated May 10, 2026.</p>
 
   <h2>Latest <span class="badge badge-done">Done</span></h2>
   <div class="items">
+    <div class="item">
+      <div class="check check-done">&#10003;</div>
+      <div class="label">v10.2.6 Mini-Release</div>
+      <div class="desc">Critical user-reported bug fixes. OpenAI provider 400 fixed across all models. The chat completions API standardized on max_completion_tokens, and reasoning models (o1, o3, o4, gpt-5) need different parameter handling than earlier GPT models. Gemini tool calling now round-trips thoughtSignature so reasoning-enabled Gemini 2.5 Pro and Flash accept follow-up function-call turns. Sleep/wake recovery: the renderer no longer ends up on a blank screen with a client-side exception when the system resumes from suspend or unlocks. Capabilities awareness: Skales now answers "yes" when asked if it can do math, render HTML, copy code blocks, etc., reflecting features that were live since v10.2.5 but absent from the system prompt. Planner: weekly schedules honor the day-of-week selection (the previous default of Mon to Fri made weekly look indistinguishable from daily), defensive coercion in isTaskDue prevents silent type-mismatch bugs, and Planner task definitions now appear in the global Tasks list alongside one-off tasks. Provider audit pass: xai default model bumped to grok-3 (grok-2 retired). Auto-updater untouched. DNA invariants intact.</div>
+      <div class="version-tag">v10.2.6</div>
+    </div>
     <div class="item">
       <div class="check check-done">&#10003;</div>
       <div class="label">v10.2.5 — Polish &amp; Fix</div>
@@ -117,7 +123,7 @@
   </div>
 
   <footer>
-    <span>Skales v<span data-skales-version>10.2.5</span> &mdash; &copy; 2024&ndash;2026 Mario Simic &mdash; BSL 1.1</span>
+    <span>Skales v<span data-skales-version>10.2.6</span> &mdash; &copy; 2024&ndash;2026 Mario Simic &mdash; BSL 1.1</span>
   </footer>
 
   <script>

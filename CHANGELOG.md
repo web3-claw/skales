@@ -7,6 +7,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## v10.2.6
+
+Mini-release focused on critical user-reported bugs across the OpenAI and Gemini providers, sleep/wake recovery, capabilities awareness, and the Planner. No new product surfaces. Auto-updater pipeline unchanged. DNA invariants intact.
+
+### Bug Fixes (Critical, User-Reported)
+
+- **OpenAI provider 400 across all models.** OpenAI's chat completions API standardized on `max_completion_tokens` in late 2025; the legacy `max_tokens` field now returns 400 on current GPT models. Reasoning models (o1, o3, o4, gpt-5) additionally reject any non-default `temperature`, and o1 / o1-mini reject `system` role messages entirely. Skales now sends the correct field per model class and folds system content into the first user turn for o1.
+- **Gemini tool calling broken (thought_signature missing).** Reasoning-enabled Gemini 2.5 Pro and Flash require the `thoughtSignature` Google returns alongside a `functionCall` part to be echoed back on the next turn. The Gemini adapter now captures and round-trips the signature, so multi-turn tool conversations no longer fail with HTTP 400.
+- **Sleep / wake white screen.** Returning from system suspend or unlocking the screen no longer leaves the Skales window stuck on a blank page with "Application error: a client-side exception has occurred". Added `powerMonitor` listeners on suspend, resume, and unlock-screen that reload all live windows after a short delay so networking is fully back before the renderer fires its first request.
+- **Capabilities awareness.** Skales is now aware of its own runtime UI features in the system prompt: KaTeX math rendering, HTML preview, code-block copy with `Ctrl+A` scoping, edit / branch / delete on user messages, manual compact, token-split tooltip, MCP servers, and the live skills system. Asking "can you do math?" or "can you render HTML?" now returns "yes" with the right context instead of an apologetic "no".
+- **Planner: weekly schedules fired daily.** The day-of-week selection in the Planner modal defaulted to Mon to Fri, which made any "weekly" schedule fire on every weekday. Defaults now reset to a single day when the user switches to weekly, and `isTaskDue` validates day arrays defensively (coerces strings to numbers, rejects malformed entries) so the day filter actually applies.
+- **Planner: BYDAY preferences ignored.** Same root cause as above. With the default reset and defensive coercion in place, picking "Monday + Wednesday" now fires only on Monday and Wednesday.
+- **Planner: tasks not visible in Tasks list.** Recurring tasks created in the Planner now appear in the global Tasks page alongside one-off tasks. Each Planner run still produces its own execution entry with full logs.
+- **Telegram proactive Friend Mode messages not firing since the Desktop Buddy proactive feature was added.** When the shared `resolveOutboundChatId` helper was introduced (which falls back to `telegram-state.json` when the in-memory `pairedChatId` is stale, e.g. after a Telegram bot restart), three proactive senders migrated to it (calendar reminders, autopilot morning briefing, buddy intelligence) but four sites in the autonomous runner were missed: Friend Mode check-ins, the autopilot approval notifier, the daily standup delivery, and cron-task completion notifications. From the user's perspective: Buddy proactive kept working through bot restarts via the fallback while Friend Mode silently died. All four sites now resolve the outbound chat ID through the same helper, so Buddy and Telegram fire in parallel as intended with their own cooldowns and conditions.
+- **MCP Servers tab failing to load with 401 error.** UI status display now loads correctly while CLI auth boundary stays intact.
+
+### Tech Debt
+
+- Provider audit pass across all 13+ adapters. xAI default model bumped to `grok-3` (grok-2 was retired from xAI's chat completions endpoint in 2025). MiniMax base URL inconsistency between `actions/chat.ts` and `lib/provider-model-fetch.ts` documented for v10.3 review.
+
+
 ## v10.2.5
 
 Stability and polish release across nine sprint sessions. No new product surfaces. Auto-updater pipeline unchanged. DNA invariants intact.

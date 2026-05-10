@@ -28,7 +28,7 @@
   <sub>iOS & Android currently in Beta - Q2 2026</sub>
     </p>
 <p>
-    <a href="https://github.com/skalesapp/skales/releases/tag/v10.2.5"><img src="https://img.shields.io/badge/version-10.2.5-10b981?style=flat-square" alt="Version 10.2.5" /></a>
+    <a href="https://github.com/skalesapp/skales/releases/tag/v10.2.6"><img src="https://img.shields.io/badge/version-10.2.6-10b981?style=flat-square" alt="Version 10.2.6" /></a>
     <a href="https://skales.app"><img src="https://img.shields.io/badge/license-BSL_1.1-10b981?style=flat-square" alt="License" /></a>
     <a href="https://skales.app"><img src="https://img.shields.io/badge/Windows_+_macOS_+_Linux_+_Android-10b981?style=flat-square&logo=windows&logoColor=white" alt="Platform" /></a>
     <a href="https://github.com/skalesapp/skales/stargazers"><img src="https://img.shields.io/github/stars/skalesapp/skales?style=flat-square&color=10b981" alt="Stars" /></a>
@@ -38,7 +38,7 @@
     Chat, code autonomously, create images & videos, control your desktop, browse the web, organize multi-agent teams, manage calendars, send emails, and automate your day.
   </p>
 
-  <p><sub><b>What's new in 10.2.5</b> — skill toggles now actually work (latent bug fixed across orchestrator), Playground per-mode override persistence, MCP state reporting, KaTeX math rendering, edit/branch/delete on user messages, manual compact button, code block copy, Ctrl+A scoping, responsive header polish, defense-in-depth cli/mcp auth. <a href="./CHANGELOG.md">Full changelog →</a></sub></p>
+  <p><sub><b>What's new in 10.2.6</b>: OpenAI provider 400 fixed across all models, Gemini tool calling round-trips thoughtSignature, sleep/wake no longer leaves the renderer on a blank screen, Skales is now aware of its own UI capabilities (KaTeX, HTML preview, MCP, code copy, edit/branch/delete, manual compact, token tooltip), Planner weekly recurrence honors day selection and Planner tasks appear in the Tasks list. <a href="./CHANGELOG.md">Full changelog →</a></sub></p>
 
  <p>If you find this useful, a ⭐ helps others discover it</p>
   <p>
