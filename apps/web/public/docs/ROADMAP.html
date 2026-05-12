@@ -381,6 +381,65 @@
 <div class="content">
 
   <!-- ═══════════════════════════════════════════════
+       SHIPPED – v10.2.8 STABILITY SPRINT
+  ════════════════════════════════════════════════ -->
+  <div class="release-header">
+    <span class="release-tag" style="color:var(--green);background:var(--green-dim);border-color:var(--green-border);">Shipped</span>
+    <div>
+      <div class="release-title">v10.2.8 &mdash; Stability Sprint <span style="font-size:0.75em;opacity:0.6;font-weight:400;">May 12, 2026</span></div>
+      <div class="release-sub">Eight-day stability sprint. New Skales Mobile launch on Android. Memory Mode rename. Codework polish. Session-write race condition closed. Auto-updater pipeline unchanged. DNA invariants intact. Locale parity preserved.</div>
+    </div>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon">📱</div>
+      <div class="card-body">
+        <div class="card-title">Skales Mobile is Live on Android</div>
+        <div class="card-desc">Skales Mobile is publicly available on the Google Play Store for Android phones and tablets. Pair your phone via QR for full access to Desktop's tool surface through an end-to-end encrypted relay, or run standalone with 27 native mobile tools. Install from <a href="https://play.google.com/store/apps/details?id=app.skales.mobile">https://play.google.com/store/apps/details?id=app.skales.mobile</a>. iOS is in App Store review and lands the moment review clears.</div>
+        <div class="card-tags"><span class="tag">Mobile</span><span class="tag">New</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🧠</div>
+      <div class="card-body">
+        <div class="card-title">Memory Mode &mdash; clearer naming, advanced gate, header badge</div>
+        <div class="card-desc">The setting formerly known as Token Compressor is now called Memory Mode. Three modes: Always Remember, Compact, Minimal. Minimal moved behind an Advanced disclosure to prevent accidental selection. When the active mode is non-default, a small amber Brain badge appears in the chat header to surface the state and provide a one-click jump back to settings. Hidden in Mini Mode, matching the established pattern for Voice, Call, Share, and Incognito.</div>
+        <div class="card-tags"><span class="tag">UX</span><span class="tag">Memory</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🛠️</div>
+      <div class="card-body">
+        <div class="card-title">Codework polish &mdash; resume banner, file tree toggle, sorted recent</div>
+        <div class="card-desc">Resume banner replaces the previous Continue button as the canonical resume affordance for paused or interrupted Codework sessions, with Resume and Dismiss actions that persist. A new header button toggles the file tree pane visibility, with state retained across restarts. Recent sessions now sort by last-touched time instead of filename, and status badges expand to five states (IN PROGRESS, DONE, ERR, STOPPED, or none for unknown).</div>
+        <div class="card-tags"><span class="tag">Codework</span><span class="tag">UX</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔒</div>
+      <div class="card-body">
+        <div class="card-title">Per-session write mutex closes the race condition</div>
+        <div class="card-desc">Concurrent writers (chat page mid-conversation, buddy poll, mobile bridge, Telegram inbound, Spotlight) could previously clobber each other through a last-writer-wins pattern. A new per-session in-process mutex now serializes all writers, and the mobile bridge re-loads the session at write time instead of overwriting with a pre-call snapshot. Race window shrinks from seconds-to-minutes down to milliseconds, effectively race-free for everyday use. Telemetry warns in DevTools console when an unexpected shrink occurs; Manual Compact logs an "intentional shrink" marker so the two are distinguishable.</div>
+        <div class="card-tags"><span class="tag">Stability</span><span class="tag">Bugfix</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔧</div>
+      <div class="card-body">
+        <div class="card-title">Render filter + sidebar agent filter + Open Folder + Tasks expand</div>
+        <div class="card-desc">Assistant turns that carried tool_calls but no captured tool results (interrupted mid-execution) used to vanish from the chat render entirely; they now render as an italic indicator listing the attempted tool names. The sidebar now filters sessions by the currently selected agent so clicking a session no longer reroutes to a different agent's context. Codework projects gained an Open in Finder / Open in Explorer button in the project header. Long task results no longer truncate silently &mdash; click any task to open a full-text modal. OpenRouter is now the default provider for new installs, persona persists across conversation restarts, and three API routes that were inadvertently ignored are now tracked correctly.</div>
+        <div class="card-tags"><span class="tag">UX</span><span class="tag">Bugfix</span></div>
+      </div>
+      <div class="card-status status-shipped">✓ Shipped</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
        SHIPPED – v10.2.2 COMBINED HOTFIX + FEATURES
        (v10.2.1 was rolled into v10.2.2)
   ════════════════════════════════════════════════ -->
@@ -1230,8 +1289,8 @@
     <div class="card current">
       <div class="card-icon">🔧</div>
       <div class="card-body">
-        <div class="card-title">Token Compressor</div>
-        <div class="card-desc">Three intelligent compression levels in Settings reduce context bloat and redundancy. Automatically summarize conversations to fit more history in your token budget without losing important context.</div>
+        <div class="card-title">Memory Mode</div>
+        <div class="card-desc">Three modes in Settings — Always Remember, Compact, and Minimal — control how much of the conversation Skales keeps in context. Trade quality for token cost without changing models.</div>
       </div>
       <div class="card-status status-shipped">✓ Shipped</div>
     </div>

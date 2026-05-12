@@ -10,8 +10,8 @@
 
 </p>
 <p align="center">
-  <a href="https://github.com/skalesapp/skales/discussions/80">
-    <img src="https://skales.app/mobile.png" alt="Skales Mobile is coming" width="800">
+  <a href="https://play.google.com/store/apps/details?id=app.skales.mobile">
+    <img src="https://skales.app/mobile.png" alt="Skales Mobile is live on Google Play" width="800">
   </a>
 </p>
   <p align="center">
@@ -25,10 +25,10 @@
     <strong>Local AI Desktop Agent for Windows, macOS & Linux</strong>
   </p>
   <p>
-  <sub>iOS & Android currently in Beta - Q2 2026</sub>
+  <sub>Android live on Google Play. iOS in App Store review.</sub>
     </p>
 <p>
-    <a href="https://github.com/skalesapp/skales/releases/tag/v10.2.6"><img src="https://img.shields.io/badge/version-10.2.6-10b981?style=flat-square" alt="Version 10.2.6" /></a>
+    <a href="https://github.com/skalesapp/skales/releases/tag/v10.2.8"><img src="https://img.shields.io/badge/version-10.2.8-10b981?style=flat-square" alt="Version 10.2.8" /></a>
     <a href="https://skales.app"><img src="https://img.shields.io/badge/license-BSL_1.1-10b981?style=flat-square" alt="License" /></a>
     <a href="https://skales.app"><img src="https://img.shields.io/badge/Windows_+_macOS_+_Linux_+_Android-10b981?style=flat-square&logo=windows&logoColor=white" alt="Platform" /></a>
     <a href="https://github.com/skalesapp/skales/stargazers"><img src="https://img.shields.io/github/stars/skalesapp/skales?style=flat-square&color=10b981" alt="Stars" /></a>
@@ -38,7 +38,7 @@
     Chat, code autonomously, create images & videos, control your desktop, browse the web, organize multi-agent teams, manage calendars, send emails, and automate your day.
   </p>
 
-  <p><sub><b>What's new in 10.2.6</b>: OpenAI provider 400 fixed across all models, Gemini tool calling round-trips thoughtSignature, sleep/wake no longer leaves the renderer on a blank screen, Skales is now aware of its own UI capabilities (KaTeX, HTML preview, MCP, code copy, edit/branch/delete, manual compact, token tooltip), Planner weekly recurrence honors day selection and Planner tasks appear in the Tasks list. <a href="./CHANGELOG.md">Full changelog →</a></sub></p>
+  <p><sub><b>What's new in 10.2.8</b>: Skales Mobile is now live on Google Play for Android. Memory Mode replaces the old Token Compressor with clearer naming and an Advanced gate for Minimal mode. New chat header badge surfaces non-default Memory Mode state. Codework gets a resume banner, file-tree toggle, and recent sessions sorted by activity. Per-session write mutex closes a long-standing race condition that could cause concurrent writers to clobber each other. Tool-only assistant turns no longer vanish from the chat after a restart. <a href="./CHANGELOG.md">Full changelog →</a></sub></p>
 
  <p>If you find this useful, a ⭐ helps others discover it</p>
   <p>
@@ -261,7 +261,7 @@ Like Spotify Wrapped for your AI. Auto-generates every Monday. Activities, top t
 
 **Maintainer:** Mario Simic (solo founder, Vienna, Austria).
 
-**Contributors:** [@btafoya](https://github.com/btafoya), [@bmp-jaller](https://github.com/bmp-jaller), [@henk717](https://github.com/henk717), [@SohaibKhaliq](https://github.com/SohaibKhaliq), [@VladB-evs](https://github.com/VladB-evs), [@v33-kind](https://github.com/v33-kind), [@sidharth-vijayan](https://github.com/sidharth-vijayan), [@saagnik23](https://github.com/saagnik23), [@Kombowz](https://github.com/Kombowz), [@anthonytrance](https://github.com/anthonytrance), [@karelrokk-droid](https://github.com/karelrokk-droid), [@mclaudiopt](https://github.com/mclaudiopt), [@1Hackoon](https://github.com/1Hackoon), [@tbaumann](https://github.com/tbaumann), [@Derrick-xn](https://github.com/Derrick-xn) [@NikiKeyz](https://github.com/NikiKeyz) 
+**Contributors:** [@btafoya](https://github.com/btafoya), [@bmp-jaller](https://github.com/bmp-jaller), [@henk717](https://github.com/henk717), [@SohaibKhaliq](https://github.com/SohaibKhaliq), [@VladB-evs](https://github.com/VladB-evs), [@v33-kind](https://github.com/v33-kind), [@sidharth-vijayan](https://github.com/sidharth-vijayan), [@saagnik23](https://github.com/saagnik23), [@Kombowz](https://github.com/Kombowz), [@anthonytrance](https://github.com/anthonytrance), [@karelrokk-droid](https://github.com/karelrokk-droid), [@mclaudiopt](https://github.com/mclaudiopt), [@1Hackoon](https://github.com/1Hackoon), [@tbaumann](https://github.com/tbaumann), [@Derrick-xn](https://github.com/Derrick-xn) [@jazzroutine](https://github.com/jazzroutine) [@LLen](https://github.com/LLen) [@NikiKeyz](https://github.com/NikiKeyz) 
 
 
 [Discussions](https://github.com/skalesapp/skales/discussions) · [Bug Reports](https://github.com/skalesapp/skales/issues)

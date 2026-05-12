@@ -7,6 +7,57 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## v10.2.8
+
+The v10.2.8 Stability Sprint. Eight days of focused work across the desktop chat surface, codework, settings UX, session persistence, and the new Skales Mobile app launch. Auto-updater pipeline unchanged. DNA invariants intact. Locale parity preserved at 12 × 4061.
+
+### Skales Mobile is Live on Android
+
+Skales Mobile is now publicly available on the Google Play Store for Android phones and tablets. Connect to your Skales Desktop instance over the encrypted relay for full feature access, or run the standalone mode with 27 native mobile tools. Install from the Play Store at https://play.google.com/store/apps/details?id=app.skales.mobile.
+
+iOS is in review with Apple. The Play Store launch is the public beachhead; iOS lands the moment review clears.
+
+### New Features
+
+- **Memory Mode.** The setting formerly known as Token Compressor is now called Memory Mode, with clearer mode names (Always Remember, Compact, Minimal) and a more intuitive UI. Minimal mode moved behind an Advanced disclosure to prevent accidental selection. When the active mode is non-default, a small amber Brain badge appears in the chat header to surface the state and provide a one-click jump back to settings. Hidden in Mini Mode, matching the established pattern for Voice, Call, Share, and Incognito.
+- **Codework resume banner.** When the most-recent Codework session was paused or interrupted, a dismissible resume banner appears at the top of the welcome view with Resume and Dismiss buttons. The banner replaces the previous Continue button as the canonical resume affordance. Dismiss transitions an active session to a stopped state and persists so the banner does not reappear.
+- **Codework file-tree toggle.** New header button toggles the file tree pane visibility, with state persisted across restarts.
+- **Codework recent sessions sorted by activity.** Recent sessions now sort by last-touched time instead of filename. Status badges expanded to five states: IN PROGRESS, DONE, ERR, STOPPED, or none for unknown.
+- **Sidebar agent filter.** The sidebar now filters sessions by the currently selected agent, so clicking a session no longer reroutes to a different agent's context.
+- **Open Folder button.** Codework projects now have an Open in Finder / Open in Explorer button in the project header.
+- **OpenRouter as default provider.** New installs and first-time setups now default to OpenRouter as the primary provider for faster onboarding.
+- **Tasks expand modal.** Long task results no longer truncate silently. Click any task to open a full-text modal.
+- **Persona persistence.** Selected persona now persists across conversation restarts.
+
+### Bug Fixes
+
+- **Session write race condition.** Concurrent writers (chat page mid-conversation, buddy poll, mobile bridge, Telegram inbound, Spotlight) could previously clobber each other through a last-writer-wins pattern. A new per-session in-process mutex serializes all writers, and the mobile bridge specifically now re-loads the session at write time instead of overwriting with a pre-call snapshot. Race window shrinks from seconds-to-minutes down to milliseconds, effectively race-free for everyday use. Telemetry warns in DevTools console when an unexpected shrink occurs; Manual Compact logs an "intentional shrink" marker so the two are distinguishable.
+- **Tool-only assistant turns no longer vanish.** When an assistant turn carried tool_calls but no captured tool results (interrupted mid-execution, rare race), the chat render filter previously dropped the row entirely. Those turns now render as an italic indicator listing the attempted tool names, preserving the conversation timeline.
+- **Skill AI / GPT-5.x consolidation.** Edge cases in the GPT-5.x reasoning detection added in v10.2.7 are consolidated and covered.
+- **Tool pruning logic.** A regression in tool-pruning for large conversations is corrected.
+
+
+### Co-Pilot
+
+Welcome **Niki (@NikiKeyz)** as Skales Co-Pilot. His first contribution landed during the v10.2.8 cycle. 
+
+### Under the Hood
+
+- 14 contributor and 6 public issues closed across the sprint.
+- Three coordinated quick-fixes shipped alongside the main sessions.
+
+
+## v10.2.7
+
+Hotfix for three user-reported regressions surfaced after v10.2.6. No new product surfaces. Auto-updater pipeline unchanged. DNA invariants intact. Locale parity preserved.
+
+### Bug Fixes
+
+- **OpenAI GPT-5.x models failing with 400 errors.** v10.2.6 detected o1, o3, o4, and bare gpt-5 but missed every GPT-5.x dot-version. Detection now covers the full lineup (gpt-5.1 through gpt-5.5) with every documented suffix (mini, nano, pro, codex, codex-spark, chat-latest, thinking, instant) and every dated snapshot. Detection is also provider-agnostic, so GPT-5.x routed through OpenRouter, Custom Provider, or any OpenAI-compatible relay now sends `max_completion_tokens`, omits `temperature`, and folds `system` into `user` only for o1 family per OpenAI's current API documentation.
+- **Custom Provider 404 errors.** The chat completions URL builder now detects existing version segments in your Base URL (like `/v4`, `/v1`, or a full `/chat/completions` path) and avoids appending duplicates. Z.ai (regular, coding, and OpenAI-compat endpoints), Groq, and other providers with non-default URL structures work out of the box. Same detection applies to model-list discovery.
+- **Telegram proactive messages returning provider errors.** Friend Mode, Identity Maintenance, daily standup, and cron task completion notifications now share the same body builder as in-app chat. The previous split between the chat path and the Telegram-channel path is gone, so reasoning-model handling, system-message folding, and tool-array formatting stay consistent across every send site (chat, ReAct loop, autonomous-task fallback, and code builder).
+
+
 ## v10.2.6
 
 Mini-release focused on critical user-reported bugs across the OpenAI and Gemini providers, sleep/wake recovery, capabilities awareness, and the Planner. No new product surfaces. Auto-updater pipeline unchanged. DNA invariants intact.
