@@ -7,6 +7,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## v10.2.9
+
+Hotfix for Organization task lifecycle.
+
+### Bug Fixes
+
+- **Instant abort for Organization tasks.** The Abort button now cancels in-flight LLM API calls within milliseconds via AbortController, instead of waiting up to 300s for the current call to time out. No more wasted tokens on aborted runs.
+- **Project deletion stops running tasks.** Deleting a project with an active task now aborts the task before removing the project file, so the underlying Organization task stops cleanly.
+- **Orphaned tasks cleaned up on startup.** Tasks left in 'running' state after a crash or restart are marked 'aborted' on next boot, so the UI does not try to resume dead tasks.
+
+### Co-Pilot
+
+Thanks to Niki (@NikiKeyz) for the SkyNet PR.
+
+
 ## v10.2.8
 
 The v10.2.8 Stability Sprint. Eight days of focused work across the desktop chat surface, codework, settings UX, session persistence, and the new Skales Mobile app launch. Auto-updater pipeline unchanged. DNA invariants intact. Locale parity preserved at 12 × 4061.

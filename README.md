@@ -28,7 +28,7 @@
   <sub>Android live on Google Play. iOS in App Store review.</sub>
     </p>
 <p>
-    <a href="https://github.com/skalesapp/skales/releases/tag/v10.2.8"><img src="https://img.shields.io/badge/version-10.2.8-10b981?style=flat-square" alt="Version 10.2.8" /></a>
+    <a href="https://github.com/skalesapp/skales/releases/tag/v10.2.9"><img src="https://img.shields.io/badge/version-10.2.9-10b981?style=flat-square" alt="Version 10.2.9" /></a>
     <a href="https://skales.app"><img src="https://img.shields.io/badge/license-BSL_1.1-10b981?style=flat-square" alt="License" /></a>
     <a href="https://skales.app"><img src="https://img.shields.io/badge/Windows_+_macOS_+_Linux_+_Android-10b981?style=flat-square&logo=windows&logoColor=white" alt="Platform" /></a>
     <a href="https://github.com/skalesapp/skales/stargazers"><img src="https://img.shields.io/github/stars/skalesapp/skales?style=flat-square&color=10b981" alt="Stars" /></a>
@@ -37,8 +37,6 @@
     One-click install. No Docker. No terminal. 15+ AI providers. Runs locally with Ollama.<br/>
     Chat, code autonomously, create images & videos, control your desktop, browse the web, organize multi-agent teams, manage calendars, send emails, and automate your day.
   </p>
-
-  <p><sub><b>What's new in 10.2.8</b>: Skales Mobile is now live on Google Play for Android. Memory Mode replaces the old Token Compressor with clearer naming and an Advanced gate for Minimal mode. New chat header badge surfaces non-default Memory Mode state. Codework gets a resume banner, file-tree toggle, and recent sessions sorted by activity. Per-session write mutex closes a long-standing race condition that could cause concurrent writers to clobber each other. Tool-only assistant turns no longer vanish from the chat after a restart. <a href="./CHANGELOG.md">Full changelog →</a></sub></p>
 
  <p>If you find this useful, a ⭐ helps others discover it</p>
   <p>
