@@ -9,11 +9,7 @@
     <img src="https://skales.app/readme.gif" alt="Skales AI Desktop Agent Interface" width="100%" />
 
 </p>
-<p align="center">
-  <a href="https://play.google.com/store/apps/details?id=app.skales.mobile">
-    <img src="https://skales.app/mobile.png" alt="Skales Mobile is live on Google Play" width="800">
-  </a>
-</p>
+
   <p align="center">
   <a href="https://www.youtube.com/watch?v=k83NlptVmfc">
     <img src="https://img.youtube.com/vi/k83NlptVmfc/maxresdefault.jpg" 
@@ -93,7 +89,15 @@ Select any project folder. Describe the task. Pick your model. Watch the agent r
 ### 🏢 Organization
 Build an AI company. Create departments, assign specialized agents, set team leaders, and delegate complex tasks. The CEO agent auto-routes work to the right team. Export and import Company Packs to share your org setup. Advisor Strategy: use a powerful model for planning and a fast model for execution.
 
-### 📱 Skales Mobile (NEW in v10)
+### 📱 Skales Mobile
+
+<p align="left">
+  <a href="https://play.google.com/store/apps/details?id=app.skales.mobile">
+    <img src="https://skales.app/mobile.png" alt="Skales Mobile is live on Google Play" width="800">
+  </a>
+</p>
+
+
 Your AI agent in your pocket. Android now, iOS soon. Pair via QR and the phone instantly gets access to THIS desktop's full tool set (139+ tools: shell, files, browser control, email, calendar, Studio, everything). End-to-end encrypted relay. Keys never leave the devices. Or run the phone **standalone** — 27 native mobile tools, no desktop needed. Shared ecosystem: same Discover Feed, same Custom Agents, same Skills.
 
 ### 🗣️ Voice — Talk to Skales (NEW in v10)
