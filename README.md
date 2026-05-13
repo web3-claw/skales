@@ -1,22 +1,14 @@
 <div align="center">
-  <p>
+  <h1>Skales 🦎</h1>
+  <p>Skales Desktop:
     <a href="https://skales.app/download/latest-windows"><b>Windows</b></a> · 
     <a href="https://skales.app/download/latest-mac-arm64"><b>macOS (Apple Silicon)</b></a> · 
     <a href="https://skales.app/download/latest-mac-intel"><b>macOS (Intel)</b></a> · 
     <a href="https://skales.app/download/latest-linux"><b>Linux</b></a>
   </p>
-<p align="center">
-    <img src="https://skales.app/readme.gif" alt="Skales AI Desktop Agent Interface" width="100%" />
+  <p>Skales Mobile: 📱<a href="https://play.google.com/store/apps/details?id=app.skales.mobile"><b>Android</b></a></p>
 
-</p>
-
-  <p align="center">
-  <a href="https://www.youtube.com/watch?v=k83NlptVmfc">
-    <img src="https://img.youtube.com/vi/k83NlptVmfc/maxresdefault.jpg" 
-         alt="Skales Demo Video" width="100%" />
-  </a>
-</p>
-  <h1>Skales 🦎</h1>
+</b></p>
   <p>
     <strong>Local AI Desktop Agent for Windows, macOS & Linux</strong>
   </p>
@@ -33,14 +25,27 @@
     One-click install. No Docker. No terminal. 15+ AI providers. Runs locally with Ollama.<br/>
     Chat, code autonomously, create images & videos, control your desktop, browse the web, organize multi-agent teams, manage calendars, send emails, and automate your day.
   </p>
+   <p>
+    <sub>Switching from <b>OpenClaw</b>, <b>Hermes Agent</b>, or <b>ChatGPT</b>? Skales has a built-in migration importer. Settings > Import from Another Tool.</sub>
+  </p>
+<p align="center">
+    <img src="https://skales.app/readme.gif" alt="Skales AI Desktop Agent Interface" width="100%" />
+
+</p>
+
+  <p align="center">
+  <a href="https://www.youtube.com/watch?v=k83NlptVmfc">
+    <img src="https://img.youtube.com/vi/k83NlptVmfc/maxresdefault.jpg" 
+         alt="Skales Demo Video" width="100%" />
+  </a>
+</p>
+
 
  <p>If you find this useful, a ⭐ helps others discover it</p>
   <p>
     <a href="https://docs.skales.app">Documentation</a> · <a href="https://getskales.app">Blog</a> · <a href="./CHANGELOG.md">Changelog</a> · <a href="https://github.com/skalesapp/skales/discussions">Community</a>
   </p>
-  <p>
-    <sub>Switching from <b>OpenClaw</b>, <b>Hermes Agent</b>, or <b>ChatGPT</b>? Skales has a built-in migration importer. Settings > Import from Another Tool.</sub>
-  </p>
+ 
 
 </div>
 
