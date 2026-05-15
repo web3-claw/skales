@@ -7,7 +7,10 @@
     <a href="https://skales.app/download/latest-linux"><b>Linux</b></a>
   </p>
   <p>Skales Mobile: 📱<a href="https://play.google.com/store/apps/details?id=app.skales.mobile"><b>Android</b></a></p>
+<p align="center">
+    <img src="https://skales.app/readme.gif" alt="Skales AI Desktop Agent Interface" width="100%" />
 
+</p>
 </b></p>
   <p>
     <strong>Local AI Desktop Agent for Windows, macOS & Linux</strong>
@@ -16,7 +19,7 @@
   <sub>Android live on Google Play. iOS in App Store review.</sub>
     </p>
 <p>
-    <a href="https://github.com/skalesapp/skales/releases/tag/v10.2.9"><img src="https://img.shields.io/badge/version-10.2.9-10b981?style=flat-square" alt="Version 10.2.9" /></a>
+    <a href="https://github.com/skalesapp/skales/releases/tag/v10.2.10"><img src="https://img.shields.io/badge/version-10.2.10-10b981?style=flat-square" alt="Version 10.2.10" /></a>
     <a href="https://skales.app"><img src="https://img.shields.io/badge/license-BSL_1.1-10b981?style=flat-square" alt="License" /></a>
     <a href="https://skales.app"><img src="https://img.shields.io/badge/Windows_+_macOS_+_Linux_+_Android-10b981?style=flat-square&logo=windows&logoColor=white" alt="Platform" /></a>
     <a href="https://github.com/skalesapp/skales/stargazers"><img src="https://img.shields.io/github/stars/skalesapp/skales?style=flat-square&color=10b981" alt="Stars" /></a>
@@ -28,10 +31,10 @@
    <p>
     <sub>Switching from <b>OpenClaw</b>, <b>Hermes Agent</b>, or <b>ChatGPT</b>? Skales has a built-in migration importer. Settings > Import from Another Tool.</sub>
   </p>
-<p align="center">
-    <img src="https://skales.app/readme.gif" alt="Skales AI Desktop Agent Interface" width="100%" />
+<br><br>
 
-</p>
+
+## Demo
 
   <p align="center">
   <a href="https://www.youtube.com/watch?v=k83NlptVmfc">
