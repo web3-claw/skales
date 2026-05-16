@@ -1,6 +1,6 @@
 # Skales — Linux Installation Guide (Beta)
 
-> **Linux support is in Beta as of v7.2.0.** Core features work well on major distros. See Known Issues below for edge cases.
+> **Linux support is in Beta.** Core features work well on major distros. See Known Issues below for edge cases.
 
 ---
 
@@ -15,6 +15,18 @@ Two formats are available:
 | **AppImage** (recommended) | Any distro — Ubuntu, Fedora, Arch, Manjaro, Mint, etc. |
 | **.deb** | Debian, Ubuntu, and derivatives (apt-based) |
 
+Filenames follow the pattern `Skales-<version>-x64.AppImage` / `Skales-<version>-x64.deb`. Replace `<version>` with the version you downloaded.
+
+---
+
+## Prerequisites
+
+- **FUSE** (required for AppImage on some distros):
+  ```bash
+  sudo apt install fuse libfuse2      # Debian / Ubuntu
+  sudo dnf install fuse fuse-libs     # Fedora
+  ```
+
 ---
 
 ## AppImage (Recommended)
@@ -23,8 +35,8 @@ Works on any distro without installation. No root required.
 
 ```bash
 # Make executable and run
-chmod +x Skales-7.2.0-x64.AppImage
-./Skales-7.2.0-x64.AppImage
+chmod +x Skales-<version>-x64.AppImage
+./Skales-<version>-x64.AppImage
 ```
 
 To add to your application launcher, create a `.desktop` file:
@@ -33,12 +45,36 @@ To add to your application launcher, create a `.desktop` file:
 cat > ~/.local/share/applications/skales.desktop << 'EOF'
 [Desktop Entry]
 Name=Skales
-Exec=/path/to/Skales-7.2.0-x64.AppImage
+Exec=/path/to/Skales-<version>-x64.AppImage
 Icon=skales
 Type=Application
 Categories=Utility;Development;
 EOF
 ```
+
+### Ubuntu 24.04+ and the AppArmor sandbox
+
+Ubuntu 24.04 and later (and a growing number of other distros) ship with kernel option `kernel.apparmor_restrict_unprivileged_userns=1`, which blocks unprivileged user namespaces. The Chromium sandbox that Electron uses depends on user namespaces, so the AppImage would fail to launch without intervention.
+
+**Automatic fallback (default):** Skales detects this restriction at startup and falls back to `--no-sandbox` so the app launches reliably. A log line is printed at startup when the fallback is active.
+
+**Full sandbox (optional, recommended):** to keep the Chromium sandbox enabled, install an AppArmor profile that exempts the Skales binary. Save the snippet below as `/etc/apparmor.d/skales`, then reload AppArmor.
+
+```
+# /etc/apparmor.d/skales
+abi <abi/4.0>,
+include <tunables/global>
+profile skales /opt/Skales/skales flags=(unconfined) {
+  userns,
+  include if exists <local/skales>
+}
+```
+
+```bash
+sudo apparmor_parser -r /etc/apparmor.d/skales
+```
+
+If you launch the AppImage from a different path, adjust the profile path to match. Restart Skales after installing the profile.
 
 ---
 
@@ -46,7 +82,7 @@ EOF
 
 ```bash
 # Install the package
-sudo dpkg -i Skales-7.2.0-x64.deb
+sudo dpkg -i Skales-<version>-x64.deb
 
 # Fix any missing dependencies
 sudo apt-get install -f
@@ -66,7 +102,7 @@ mkdir -p ~/.config/autostart
 cat > ~/.config/autostart/skales.desktop << 'EOF'
 [Desktop Entry]
 Name=Skales
-Exec=/path/to/Skales-7.2.0-x64.AppImage
+Exec=/path/to/Skales-<version>-x64.AppImage
 Type=Application
 X-GNOME-Autostart-enabled=true
 EOF
@@ -115,7 +151,8 @@ On **KDE Plasma**, **XFCE**, and **i3/Sway** with a compatible bar (e.g. waybar)
 | Desktop Buddy floating window may behave unexpectedly on tiling WMs (i3, Sway, Hyprland) | Disable Desktop Buddy in Settings → Desktop App if it causes layout issues |
 | System tray icon missing on stock GNOME | Install AppIndicator extension (see above) |
 | Auto-start not configured automatically | Create a `.desktop` file in `~/.config/autostart/` (see above) |
-| FUSE required for AppImage on some distros | `sudo apt install fuse libfuse2` |
+| FUSE required for AppImage on some distros | `sudo apt install fuse libfuse2` (covered in Prerequisites above) |
+| Ubuntu 24.04+ blocks Chromium sandbox via AppArmor | Auto-detected; Skales falls back to `--no-sandbox`. Install the AppArmor profile above to keep the sandbox enabled |
 | Wayland: some popup windows may flicker | Launch with `ELECTRON_OZONE_PLATFORM_HINT=wayland` prefix |
 
 ---

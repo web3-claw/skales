@@ -7,6 +7,126 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## v10.3.0
+
+A power-user release. Skales lands its first genuinely native organisational surface (the Project Tracker), a working RAG primer, a real command palette, Friend Mode that actually fires, a summarize flow that returns inline infographics instead of escaped HTML, and a manual /cast page so DLNA can finally be debugged outside the LLM tool path. The minor-version bump is for the Project Tracker - it changes "what Skales is for" enough that 10.2.x would have understated it.
+
+### Added
+
+- **Project Tracker (`/projects`).** Linear-style local workflow inside Skales. Each project carries a title, description, status (idea / planning / in_progress / paused / done), priority, tags, **optional deadline** (renders a green / amber / red progress bar with "X days left" / "Overdue by X day(s)" caption), milestone list, a Markdown notes file, **attachments** (up to 10 MB each), and a suggestedTools array. From the detail view, "Discuss with AI" or "Start working" launches a chat session scoped to the project — system message carries the notes, open milestones, and suggested tools. From chat: `/projects` (list), `/projects new "Title" | desc` (create), `/projects status "Title" → in_progress` (move), `/projects open "Title"` (jump in) — Skales creates / lists / moves projects directly from chat. Empty state renders the same 2-column shell as the populated view so the first project does not cause a layout shift. Storage is local-only at `~/.skales-data/projects/`. Designed to converge with v11 Recurring Autonomous Tasks (Issue #104) — the data model is exactly what an agent dispatcher will want.
+- **Friend Mode is alive again.** Proactive check-ins broke when Buddy Mode landed in v8/v9: the autonomous-runner heartbeat only started when Autopilot was on, so users who enabled only Friend Mode saw Skales go silent. The heartbeat now starts whenever Friend Mode is enabled, and toggling the master switch in Settings mirrors the change to the running process in real time.
+- **WhatsApp + Email channels for Friend Mode.** Both wired through `tickFriendMode` and the buddy-intelligence notification router. WhatsApp sends to the first permitted contact; Email sends to the user's own configured address. The "Coming Soon" placeholder is replaced with a real working toggle.
+- **Cmd+K / Ctrl+K command palette.** Global fuzzy launcher across every visible nav item, every settings tab, and the 20 most recent chat sessions. Suppressed in buddy / spotlight / bootstrap windows.
+- **/search command in chat.** Full-text scan over every saved session JSON file. Magnifier icon in the bottom-left composer toolbar prefills the composer. Results render inline as ranked snippets with one-click links back to the original chat.
+- **/rag command + local Knowledge Base.** Paste documents on /memory (new Knowledge Base card); content is chunked (~220 words, 40-word overlap) and indexed with BM25-lite. `/rag <query>` in chat returns the top-5 chunks with source labels and scores. No embedding model, no external services; local-only storage.
+- **Summarize style topbar.** Click the summarize button and a topbar appears with four output styles: text / markdown / HTML infographic / Jina-extract-then-summarize. The HTML mode renders inside a sandboxed iframe inline in chat and the prompt enforces an Anthropic-style aesthetic (warm off-white background, near-black body, ONE accent colour, serif headings + sans body — no neon, no playful gradients). The user's composer stays clean: the instruction wrapper attaches to the outgoing message at send time, never visible while typing.
+- **/cast page.** Manual surface for DLNA / UPnP discovery + control. Lists every device the SSDP-plus-unicast pipeline finds, shows the raw discovery debug log, casts any HTTP media URL with play / pause / stop. Gated by the `casting` add-on, off by default. The LLM-tool path also still works.
+- **13 new bundled templates** across chat / browser / studio / codework / code / planner / organization: Friday Weekly Review, Rubber-Duck Debugger, 2-Option Decision Matrix, Competitor Pricing Scan, Brand Palette Poster, README from Scratch, Deep Work Day Plan, Research+Write Pipeline, Launch Plan Starter, and more.
+- **Knowledge Graph visualization.** The KG data store has existed since v9 with entity types and relationships; the only surface was a chip row and a plain-text list. `/memory` now renders a real SVG force-directed-style graph with type-color legend and hover-to-highlight when the KG is enabled.
+- **Brand Kit -> Studio image bridge.** Brand colors, tone, and typographic direction are now appended to every image-generation prompt at the API route, falling back to the saved BrandKit on disk if the caller omits it. video-director did this since v8; the still-image path is now at parity.
+- **DLNA discovery actually finds devices.** SSDP multicast timeout bumped from 5s to 8s (covers Samsung / LG response delays). The /24 unicast port-scan now runs in parallel with SSDP by default instead of only as a fallback, so dual-band routers no longer under-report.
+- Single source of truth for navigation. Sidebar, TopNav, and IconRail read from a shared config — disabled add-ons disappear from all three nav surfaces in real time.
+- Add-Ons toggles wired across every UI surface: sidebar, settings tabs, chat tools dropdown, chat quick actions, and the LLM tool manifest.
+- One-shot upgrade notification in the Notification Center (not a toast). Explains that add-ons are now toggleable from the sidebar. Dismissed once = never reappears.
+- Tolerant session loader handles older session files with legacy tool-call format and aborted-generation entries without breaking chat replay.
+- "Powered by GIPHY" and "Powered by Klipy" attribution in Settings, Chat, and Discover Feed.
+- Add-Ons page reorganized into tabbed sections: Skales Tools, Communication, Integrations, Computer & Vision.
+- Context-size badges next to model names in chat composer and settings (red under 32K, orange 32K-64K, no badge above 64K).
+- General settings group: default location and temperature unit. Powers the weather widget and the new in-chat `get_weather` tool.
+- Multiple Google Calendar IDs supported. Plus-button in calendar config adds a row, list-aware reads fan out across all calendars.
+- Jina Reader as alternative web-text extractor next to Tavily, behind a provider selector in Settings -> Providers.
+- DeepSeek accepts `web_search` as an alias for the canonical `search_web` tool name.
+- AppImage on Ubuntu 24.04+ falls back to no-sandbox when the kernel restricts unprivileged userns. AppArmor profile snippet in INSTALL-LINUX.md.
+- Studio Gallery deletes now persist to disk. Toast on failure.
+- Reasoning blocks from llama.cpp and llama-swap render cleanly in chat.
+- Consistent "Tool Result" label for tool result blocks.
+
+### Changed
+
+- Memory section moved out of the Security tab.
+- Tavily and web extractor selector moved from Integrations to Providers.
+- Studio and Integrations tabs consolidated.
+- Settings search now matches correctly (multi-token AND-match).
+- Memory Consolidation (Dreaming) toggle auto-persists on click; previously it only set local state and never made it to disk, which is why most users never saw a nightly run.
+- Sidebar order: Discover lifted above Notifications, Projects lifted above Agents.
+- Toasts no longer surface in the buddy desktop pet, the mini-chat overlay, or the spotlight window — they belong only in the main app window.
+- Notification action URLs that start with `/` now navigate in the same window instead of opening a new BrowserWindow.
+- Set Up Vision Provider button deep-links into Settings instead of routing to Add-Ons.
+- Skills renamed to Add-Ons across navigation, page headers, and subtitles. Internal code keys unchanged for backwards compatibility.
+- Beta indicators removed everywhere except Studio.
+- Tools for unconfigured integrations no longer sent to the model on every request — drastically lower token usage on local 8K-context providers.
+- ~250 untranslated placeholders cleaned up across 11 non-English locales.
+- `check_capabilities` (the tool Skales uses to answer "what can you do?") now covers Projects, Knowledge Base (RAG), Chat History Search, Command Palette, Hugging Face Spaces, the Jina extractor backend, multi-calendar fan-out, and the default-location weather behaviour.
+
+### Fixed
+
+- Friend Mode never sent a proactive message because the heartbeat that drives it only started when Autopilot was on (root cause regression since v8/v9).
+- `/search` magnifier button was only in the mobile-only icon row, so it never rendered on desktop. Moved to the bottom-left composer toolbar.
+- Summarize prefix "Summarize this (URL, Text..):" no longer leaks as visible text into the input bar — it's a state flag now, not a string the user has to look at.
+- Mixed-language strings in Russian and Chinese gallery confirmation dialogs.
+- Hidden `data-test-canvas` div removed from organization page.
+- Stale "4 themes total" comment corrected to 6 themes.
+
+### Removed
+
+- Deprecated legacy Custom OpenAI provider section.
+
+
+## v10.2.12
+
+### Added
+
+- **Friend Mode is alive again.** Proactive check-ins broke when Buddy Mode landed in v8/v9: the autonomous-runner heartbeat only started when Autopilot was on, so users who enabled only Friend Mode saw Skales go silent. The heartbeat now also starts when activeUserBehavior is enabled, and the master toggle on the Settings page mirrors the change to the running process in real time, no app restart needed.
+- **WhatsApp + Email channels for Friend Mode.** Both wired through tickFriendMode and the buddy-intelligence notification router. WhatsApp sends to the first permitted contact; Email sends to the user's own configured address. The "Coming Soon" WhatsApp placeholder is replaced with a real working toggle.
+- **Cmd+K / Ctrl+K command palette.** Global fuzzy launcher across every visible nav item, every settings tab, and the 20 most recent chat sessions. Suppressed in buddy / spotlight / bootstrap windows.
+- **/search command in chat.** Full-text scan over every saved session JSON file. Magnifier icon next to the slash button prefills the composer. Results render inline as ranked snippets with one-click links back to the original chat.
+- **/rag command + local Knowledge Base.** Paste documents on /memory (new Knowledge Base card); content is chunked (~220 words, 40-word overlap) and indexed with BM25-lite. /rag <query> in chat returns the top-5 chunks with source labels and scores. No embedding model, no external services; storage is local-only.
+- **Knowledge Graph visualization.** The KG data store has existed since v9 with entity types and relationships, but the only surface was a chip row and a plain text list. /memory now renders a real SVG force-directed-style graph with type-color legend and hover-to-highlight when the KG is enabled.
+- **Brand Kit -> Studio image bridge.** Brand colors, tone, and typographic direction are now appended to every image-generation prompt at the API route, falling back to the saved BrandKit on disk if the caller omits it. video-director already did this since v8; the still-image path is now at parity.
+- **DLNA discovery actually finds devices.** SSDP multicast timeout bumped from 5s to 8s (covers Samsung / LG response delays). The /24 unicast port-scan now runs in parallel with SSDP by default instead of only as a fallback, so dual-band routers no longer under-report.
+- Single source of truth for navigation. Sidebar, TopNav, and IconRail read from a shared config - disabled add-ons disappear from all three nav surfaces in real time.
+- Add-Ons toggles wired across every UI surface: sidebar, settings tabs, chat tools dropdown, chat quick actions, and the LLM tool manifest. Disabling Notion (for example) removes it from everywhere until you turn it back on.
+- One-shot upgrade notification in the Notification Center (not a toast). Explains that add-ons are now toggleable from the sidebar. Dismissed once = never reappears.
+- Tolerant session loader handles older session files with legacy tool-call format and aborted-generation entries without breaking the chat replay.
+- "Powered by GIPHY" and "Powered by Klipy" attribution in Settings, Chat, and Discover Feed.
+- Add-Ons page reorganized into tabbed sections: Skales Tools, Communication, Integrations, Computer & Vision.
+- Context-size badges next to model names in chat composer and settings (red under 32K, orange 32K-64K, no badge above 64K).
+- General settings group: default location and temperature unit. Powers the weather widget and the new in-chat get_weather tool.
+- Multiple Google Calendar IDs supported. Plus-button in calendar config adds a row, list-aware reads fan out across all calendars.
+- Jina Reader as alternative web-text extractor next to Tavily, behind a provider selector in Settings -> Providers.
+- DeepSeek accepts `web_search` as an alias for the canonical `search_web` tool name.
+- AppImage on Ubuntu 24.04+ falls back to no-sandbox when the kernel restricts unprivileged userns. AppArmor profile snippet in INSTALL-LINUX.md.
+- Studio Gallery deletes now persist to disk. Toast on failure.
+- Reasoning blocks from llama.cpp and llama-swap render cleanly in chat.
+- Consistent "Tool Result" label for tool result blocks.
+
+### Changed
+
+- Memory section moved out of the Security tab.
+- Tavily and web extractor selector moved from Integrations to Providers.
+- Studio and Integrations tabs consolidated.
+- Settings search now matches correctly (multi-token AND-match).
+- Toasts no longer surface in the buddy desktop pet, the mini-chat overlay, or the spotlight window - they belong only in the main app window.
+- Notification action URLs that start with `/` now navigate in the same window instead of opening a new BrowserWindow.
+- Set Up Vision Provider button deep-links into Settings instead of routing to Add-Ons.
+- Skills renamed to Add-Ons across navigation, page headers, and subtitles. Internal code keys unchanged for backwards compatibility.
+- Beta indicators removed everywhere except Studio.
+- Tools for unconfigured integrations no longer sent to the model on every request - drastically lower token usage on local 8K-context providers.
+- ~250 untranslated placeholders cleaned up across 11 non-English locales.
+- check_capabilities (the tool Skales uses to answer "what can you do?") now also covers the v10.2.12 surfaces: Knowledge Base (RAG), Chat History Search (/search), Command Palette (Cmd+K), Hugging Face Spaces, Jina extractor backend, multi-calendar fan-out, and the default-location weather behaviour.
+
+### Fixed
+
+- Friend Mode never sent a proactive message because the heartbeat that drives it only started when Autopilot was on (root cause regression since v8/v9).
+- Mixed-language strings in Russian and Chinese gallery confirmation dialogs.
+- Hidden `data-test-canvas` div removed from organization page.
+- Stale "4 themes total" comment corrected to 6 themes.
+
+### Removed
+
+- Deprecated legacy Custom OpenAI provider section.
+
+
 ## v10.2.9
 
 Hotfix for Organization task lifecycle.
