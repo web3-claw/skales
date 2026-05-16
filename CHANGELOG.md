@@ -7,6 +7,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## v10.3.1
+
+A maintenance release that cleans up the rough edges users hit on v10.3.0. Nothing new on the surface; the things that already worked now work the way the screens promised.
+
+### Fixed
+
+- **Custom Folders survive mode switches.** Saving settings while in Workspace Only or Unrestricted mode used to wipe the configured Custom Folders list. Switching to Custom mode would then show an empty list even though the user had configured paths. The list is now persisted in every mode.
+- **OS notifications respect the Friend Mode OS-notify toggle.** Every incoming Telegram message used to fire a native desktop toast regardless of the user's Friend Mode setting. The inbox poller now reads the same channel preference the proactive heartbeat does, so OS toasts stay off when the user asked for them to stay off.
+- **Telegram replies are tagged "via Telegram" instead of "via Desktop Buddy".** The first reply in a session was tagged correctly; the second and every subsequent reply was relabelled "via Desktop Buddy" because the polling code rewrote the source field. The original source is now preserved on every turn.
+- **MCP Start actually starts the server.** The Start button on the MCP page used to only flip an internal enabled flag and wait for some other code path to lazily open a connection, which is why the status stayed "Stopped / 0 tools" even after clicking Start. Start now spawns the process and lists tools immediately, the same way Test does. Stop kills the running process without touching the saved config.
+- **MCP Edit opens a pre-filled form in edit mode.** Clicking Edit on an existing MCP server used to navigate to an empty Add form. The form is now pre-filled with the server's current name, command, args, and environment variables; the button reads "Save changes" and there is a Cancel option to back out without persisting.
+- **MCP template tiles pre-fill the Add form.** Clicking a template tile on the empty-state MCP page now actually fills in the command and arguments for that template instead of dropping the user on a blank form.
+- **MCP Logs button works.** The Logs drawer previously hit a 404 because the underlying API route was missing. The route is now in place and returns the captured stdout and stderr lines for the selected server.
+- **MCP configs with a combined command string work on macOS and Linux.** A config like `"command": "npx -y obsidian-mcp-server@latest"` with empty args used to work only on Windows (where the spawn ran through a shell). On macOS and Linux it failed because spawn treated the whole string as the binary name. The combined form is now split at spawn time, so configs written by hand, by deep-link, or imported from another tool work on all three platforms.
+- **Desktop Buddy drag stays smooth across the whole screen.** The mascot used to lose drag capture on Linux as soon as the cursor escaped the buddy window's pixel bounds, stranding it after about a third of the screen height. Drag now uses pointer capture, which works the same way on macOS, Windows, and Linux.
+- **Desktop Buddy snaps back to a visible display.** If the saved position lands off every connected display (multi-monitor disconnect, a sleep / wake cycle with displays rearranged, or a wrong primary-display pick at startup), the buddy is moved back to the primary display's bottom-right corner on the next show.
+- **Desktop Buddy on Linux lets clicks through the transparent area.** The bottom-right rectangle around the mascot used to block clicks from reaching the desktop underneath, because Linux Electron hit-tests transparent windows at the OS level. The buddy now passes clicks through wherever the mascot, the speech bubble, and the input pill are not.
+
+
 ## v10.3.0
 
 A power-user release. Skales lands its first genuinely native organisational surface (the Project Tracker), a working RAG primer, a real command palette, Friend Mode that actually fires, a summarize flow that returns inline infographics instead of escaped HTML, and a manual /cast page so DLNA can finally be debugged outside the LLM tool path. The minor-version bump is for the Project Tracker - it changes "what Skales is for" enough that 10.2.x would have understated it.
@@ -145,8 +164,6 @@ Thanks to Niki (@NikiKeyz) for the SkyNet PR.
 
 ## v10.2.8
 
-The v10.2.8 Stability Sprint. Eight days of focused work across the desktop chat surface, codework, settings UX, session persistence, and the new Skales Mobile app launch. Auto-updater pipeline unchanged. DNA invariants intact. Locale parity preserved at 12 × 4061.
-
 ### Skales Mobile is Live on Android
 
 Skales Mobile is now publicly available on the Google Play Store for Android phones and tablets. Connect to your Skales Desktop instance over the encrypted relay for full feature access, or run the standalone mode with 27 native mobile tools. Install from the Play Store at https://play.google.com/store/apps/details?id=app.skales.mobile.
@@ -185,7 +202,7 @@ Welcome **Niki (@NikiKeyz)** as Skales Co-Pilot. His first contribution landed d
 
 ## v10.2.7
 
-Hotfix for three user-reported regressions surfaced after v10.2.6. No new product surfaces. Auto-updater pipeline unchanged. DNA invariants intact. Locale parity preserved.
+Hotfix for three user-reported regressions surfaced after v10.2.6. No new product surfaces. Auto-updater pipeline unchanged.   Locale parity preserved.
 
 ### Bug Fixes
 
@@ -196,7 +213,7 @@ Hotfix for three user-reported regressions surfaced after v10.2.6. No new produc
 
 ## v10.2.6
 
-Mini-release focused on critical user-reported bugs across the OpenAI and Gemini providers, sleep/wake recovery, capabilities awareness, and the Planner. No new product surfaces. Auto-updater pipeline unchanged. DNA invariants intact.
+Mini-release focused on critical user-reported bugs across the OpenAI and Gemini providers, sleep/wake recovery, capabilities awareness, and the Planner. No new product surfaces. Auto-updater pipeline unchanged.  
 
 ### Bug Fixes (Critical, User-Reported)
 
@@ -210,50 +227,23 @@ Mini-release focused on critical user-reported bugs across the OpenAI and Gemini
 - **Telegram proactive Friend Mode messages not firing since the Desktop Buddy proactive feature was added.** When the shared `resolveOutboundChatId` helper was introduced (which falls back to `telegram-state.json` when the in-memory `pairedChatId` is stale, e.g. after a Telegram bot restart), three proactive senders migrated to it (calendar reminders, autopilot morning briefing, buddy intelligence) but four sites in the autonomous runner were missed: Friend Mode check-ins, the autopilot approval notifier, the daily standup delivery, and cron-task completion notifications. From the user's perspective: Buddy proactive kept working through bot restarts via the fallback while Friend Mode silently died. All four sites now resolve the outbound chat ID through the same helper, so Buddy and Telegram fire in parallel as intended with their own cooldowns and conditions.
 - **MCP Servers tab failing to load with 401 error.** UI status display now loads correctly while CLI auth boundary stays intact.
 
-### Tech Debt
-
-- Provider audit pass across all 13+ adapters. xAI default model bumped to `grok-3` (grok-2 was retired from xAI's chat completions endpoint in 2025). MiniMax base URL inconsistency between `actions/chat.ts` and `lib/provider-model-fetch.ts` documented for v10.3 review.
 
 
 ## v10.2.5
 
-Stability and polish release across nine sprint sessions. No new product surfaces. Auto-updater pipeline unchanged. DNA invariants intact.
 
 ### Bug Fixes (Critical)
 
-- **Skills system.** Fixed 29 broken reads in the orchestrator that caused all skill toggles to be silently ignored since the skills feature shipped. Computer Use Tools, Calendar Reminders, and other skills now actually function when toggled. (S2c)
-- **UI Skill Toggles.** Toggles persist across restart. Previously, toggles appeared to switch on but reverted after reload due to camelCase / snake_case key drift. Silent backend errors now trigger UI rollback instead of being ignored. (S2e, OF-1)
-- **Playground Override Persistence.** "Use active model" for per-mode overrides no longer springs back to the previous selection after Save. Root cause was Next.js Server Action serialization stripping `undefined` values. (S5 K1)
-- **MCP State Reporting.** The model reports MCP server status correctly instead of always claiming "off". (S2a)
-- **MCP Backend `listServersForCli`.** Returns real per-server status (disabled / connected / stopped / error) instead of hardcoded "connected" with 0 tools. (S2b)
-- **Calendar Reminders Endpoint.** Was permanently skipped due to the broken `settings.skills` field. Now reads from skills.json correctly. (S2d C5)
-- **Proxy Dispatcher.** All 12 provider sites use undiciFetch for proxy-aware HTTP. Runtime ECONNREFUSED errors with proxy enabled are gone. (S1 A2)
-- **Token Cap Cloudflare / NVIDIA.** 32K → real 128K. (S1 A3a)
-
+- **Skills system.** Fixed 29 broken reads in the orchestrator that caused all skill toggles to be silently ignored since the skills feature shipped. Computer Use Tools, Calendar Reminders, and other skills now actually function when toggled. 
+- **UI Skill Toggles.** Toggles persist across restart. Previously, toggles appeared to switch on but reverted after reload due to camelCase / snake_case key drift. Silent backend errors now trigger UI rollback instead of being ignored. - **Playground Override Persistence.** "Use active model" for per-mode overrides no longer springs back to the previous selection after Save. Root cause was Next.js Server Action serialization stripping `undefined` values. - **MCP State Reporting.** The model reports MCP server status correctly instead of always claiming "off". - **MCP Backend `listServersForCli`.** Returns real per-server status (disabled / connected / stopped / error) instead of hardcoded "connected" with 0 tools. - **Calendar Reminders Endpoint.** Was permanently skipped due to the broken `settings.skills` field. Now reads from skills.json correctly. - **Proxy Dispatcher.** All 12 provider sites use undiciFetch for proxy-aware HTTP. Runtime ECONNREFUSED errors with proxy enabled are gone. - **Token Cap Cloudflare / NVIDIA.** 32K → real 128K. 
 ### Features
 
-- **KaTeX Math Rendering.** Inline `$E=mc^2$` and block `$$...$$` render as actual mathematics. (S4b F1)
-- **Edit / Branch / Delete on User Messages.** Hover actions on user bubbles. Edit triggers truncate-and-resend. Branch creates a new chat from that point. Delete removes the message and all subsequent responses. (S4b F2)
-- **Manual Compact Button.** Compress chat history on demand instead of waiting for the 75% auto-threshold. (S4b F3)
-- **Token Split Tooltip.** Hover the token badge to see "X.XK input / Y.YK output". Default display unchanged. (S4b F4)
-- **Code Block Copy.** Hover any code block to reveal a Copy button. 2-second "Copied!" feedback. (S4b F5)
-- **Code Block Ctrl+A Scoping.** Ctrl/Cmd+A inside a code block selects only that block, not the whole window. Works for Markdown code blocks AND HTML preview blocks. (S4b F6, S4d J3)
-- **HTML Preview Copy.** Copy button added to the HTML preview header alongside Download HTML. (S4c I1)
-- **Identity Maintenance Toggle.** Moved to its dedicated section in Settings (was buried under Agent & Tasks). (S5 K4)
-
+- **KaTeX Math Rendering.** Inline `$E=mc^2$` and block `$$...$$` render as actual mathematics. - **Edit / Branch / Delete on User Messages.** Hover actions on user bubbles. Edit triggers truncate-and-resend. Branch creates a new chat from that point. Delete removes the message and all subsequent responses. - **Manual Compact Button.** Compress chat history on demand instead of waiting for the 75% auto-threshold. - **Token Split Tooltip.** Hover the token badge to see "X.XK input / Y.YK output". Default display unchanged. - **Code Block Copy.** Hover any code block to reveal a Copy button. 2-second "Copied!" feedback. - **Code Block Ctrl+A Scoping.** Ctrl/Cmd+A inside a code block selects only that block, not the whole window. Works for Markdown code blocks AND HTML preview blocks. - **HTML Preview Copy.** Copy button added to the HTML preview header alongside Download HTML. - **Identity Maintenance Toggle.** Moved to its dedicated section in Settings (was buried under Agent & Tasks). 
 ### Stability / Polish
 
-- **Header Responsive Layout.** Buttons collapse to icon-only below 1280px viewport with native tooltips on hover. Header no longer breaks on tablet portrait or narrow desktop. (S4d J1)
-- **Provider Switcher Dropdown.** Anchors correctly in chat AND playground. No more left-side cutoff. (S4d J2)
-- **Compact Button hidden in Mini Mode.** Mini Mode stays minimal. (S4c I3)
-- **Compaction Few-Shot Memory.** Last 6 tool calls preserved as few-shot examples after auto-compact. (S1 A4)
-- **MCPClient Error Sink.** Default error event handler prevents Node crashes when MCP servers misbehave. (S5 K10)
-- **Token Display Tooltip.** Power users see input / output split, casual users see unchanged total. (S4b F4)
-
+- **Header Responsive Layout.** Buttons collapse to icon-only below 1280px viewport with native tooltips on hover. Header no longer breaks on tablet portrait or narrow desktop. - **Provider Switcher Dropdown.** Anchors correctly in chat AND playground. No more left-side cutoff. - **Compact Button hidden in Mini Mode.** Mini Mode stays minimal. - **Compaction Few-Shot Memory.** Last 6 tool calls preserved as few-shot examples after auto-compact. - **MCPClient Error Sink.** Default error event handler prevents Node crashes when MCP servers misbehave. - **Token Display Tooltip.** Power users see input / output split, casual users see unchanged total. 
 
 ## v10.2.2
-
-Combined hotfix + feature release. v10.2.1 was rolled into this version. Auto-updater pipeline unchanged. DNA invariants intact.
 
 ### Provider layer
 
@@ -279,15 +269,15 @@ Combined hotfix + feature release. v10.2.1 was rolled into this version. Auto-up
 
 ### Notes
 
-- Auto-updater code path is unchanged.
-- DNA invariants intact.
+- 
+-  
 - Schema additions (`modelCache`, `modelLimits` on top of v10.2.0's existing additions) are all OPTIONAL with safe defaults. Existing `settings.json` files load unchanged.
 - 12-locale parity preserved.
 
 
 ## v10.2.0
 
-Iterative quality release across providers, modes, error UX, and chat history. No new product surfaces; existing surfaces become more resilient and configurable. Auto-updater pipeline unchanged. DNA invariants intact.
+Iterative quality release across providers, modes, error UX, and chat history. No new product surfaces; existing surfaces become more resilient and configurable. Auto-updater pipeline unchanged.  
 
 ### Provider layer
 
@@ -343,18 +333,15 @@ Iterative quality release across providers, modes, error UX, and chat history. N
 
 ### Localization
 
-- 11 new `system.errors.*` keys for the provider error translator, plus 3 new `chat.modelPicker.*` keys for the inline picker, with real translations across all 12 locales (de, en, es, fr, hr, ja, ko, pt, ru, tr, vi, zh). Locale parity 12 × 3989.
+- 11 new `system.errors.*` keys for the provider error translator, plus 3 new `chat.modelPicker.*` keys for the inline picker, with real translations across all 12 locales (de, en, es, fr, hr, ja, ko, pt, ru, tr, vi, zh). .
 
-### Internal
-
-- New shared utilities: `lib/model-limits.ts`, `lib/byte-budgeted-slice.ts`, `lib/mode-routing.ts`, `lib/error-translator.ts`, `lib/proxy-dispatcher.ts`, `lib/custom-providers.ts`, `lib/curated-models.ts`.
 
 ### Notes
 
-- Auto-updater code path is unchanged. The `electron/updater.js` edit is one additive line emitting `changelog` alongside the legacy `releaseNotes` field.
-- DNA invariants intact.
+-  
+-  
 - Settings schema additions (`customProviders`, `modeOverrides`, `playgroundQualityBoost`, `identityMaintenanceAutoApprove`, `telegramApprovalAutoResume`, `proxy` per provider) are all OPTIONAL with safe defaults. Existing settings.json files load unchanged.
-- BSL `_responseQuality` consumption hardened: authorized builds get the full registry value, unauthorized builds are hard-capped at 4096 tokens regardless of model.
+- 
 
 ---
 
@@ -381,8 +368,8 @@ Five hotfix items rolled up on top of v10.1.0 Design. No new features, no archit
 
 ### Notes
 
-- Auto-updater code is unchanged.
-- DNA invariants intact.
+- 
+-  
 
 ---
 
@@ -438,14 +425,6 @@ Codework matured significantly across the v10.0.4 to v10.1.0 cycle. It is now a 
 - **createSession testCommand wiring** fixed: the field now persists correctly into session metadata.
 - **Delete session prompt** now properly localized in all 12 languages.
 
-### Internal
-
-- **Codework runtime extracted.** `runCodeworkAgentLoop` and `buildCodeworkSystemPrompt` moved from `/api/codework/run/route.ts` (488 LOC) to `actions/codework.ts` (route now 102 LOC). Cleaner separation, easier to reuse.
-- **LIO_IGNORE_NAMES expanded** from base list to 25 entries covering more build artifact directories.
-- **Codework dogfood `.skales-backup`** directory cleaned and gitignored.
-- **Stale `/lio` and `/lizard`** slash-command references removed from chat system prompts.
-- **Debug log noise** from token-bloat and tool-prune instrumentation removed.
-- **Auto-updater** continues stable since v10.0.3.
 
 ### Mobile
 
@@ -647,16 +626,7 @@ The biggest Skales release ever. Desktop + Mobile + Relay now form one ecosystem
 - Playbook steps now wait for actual page load before proceeding
 - macOS screen recording permission detected with user-facing guidance in share window
 
-### Under the Hood
-- New fal.ai queue-based client with defensive URL extraction and 6-minute timeout
-- HTML preview preference sync across all open windows
-- Shared Framer-Motion animation presets (spring, stagger, fade variants)
-- New IPC channels for Buddy drag and region capture
-- Global CSS for typing wave dots, scroll FAB, and reduced-motion guard
-- Noto-COLRv1.ttf (4.8 MB, vector emoji font) replaces platform-specific emoji rendering
-- Emoji loader with 5-tier cache: memory → IndexedDB → VPS → Google fallback (opt-in) → Unicode
-- SkalesEmoji React component with loop/once/static/hover animation modes
-- 12 locale files reach perfect parity: 3546 keys each, zero missing, zero extra
+
 
 ### Localization
 - ~60 new i18n keys added across 12 languages (en, de, es, fr, hr, ja, ko, pt, ru, tr, vi, zh) for fal.ai models, HTML preview, voice, Mobile, animated emojis, mute/unmute, scroll-to-latest
@@ -821,12 +791,7 @@ The biggest Skales release ever. Desktop + Mobile + Relay now form one ecosystem
 - ElevenLabs settings link corrected (pointed to Providers, now points to Integrations)
 - 13 new slash command descriptions added to all 12 locale files
 
-### Technical
-- electron-builder.yml v9.2.1
-- Capabilities/system prompt v9.2.1
-- DNA markers verified intact
-- TypeScript: zero errors (`tsc --noEmit` clean)
-- New files: `lib/studio/video-providers.ts`, `api/studio/video/generate-cloud/route.ts`, `lib/elementor-templates.ts`
+
 
 
 ## v9.2.0 — "The Bridge" (April 2026)
@@ -888,12 +853,6 @@ The biggest Skales release ever. Desktop + Mobile + Relay now form one ecosystem
 - Theme + locale persistence to settings.json (survives localStorage wipes)
 - ONNX runtime webpack warnings suppressed
 
-### Technical
-- electron-builder.yml v9.2.0
-- Capabilities/system prompt v9.2.0
-- Playwright detection unified (dynamic version scanning)
-- DNA markers verified intact
-- WordPress plugin: skales-wordpress/ (MIT license, kses filters bypassed for full HTML)
 
 ---
 
@@ -1002,12 +961,6 @@ playbook_run, playbook_list
 - Removed Beta badges from Swarm, Codework, Organization
 - Added Beta badges to Studio, Templates, Playbooks
 
-### Infrastructure
-- File naming: all Studio outputs prefixed skales_studio_*
-- SECURITY.md added to GitHub repository
-- Token compressor descriptions now translatable
-- Settings search keywords expanded for all new sections
-- Settings gear icon navigates to correct section via hash anchor
 
 ---
 
@@ -1232,10 +1185,6 @@ playbook_run, playbook_list
 - **strtotime edge case** — notifications.php `$sinceRaw` validated with `!== false && > 0` before numeric comparison
 - **Duplicate loadSettings() call** — Eliminated redundant file read in system prompt builder
 
-### Infrastructure
-- Discover queue: flat-file pending queue with self-throttling guards (4h cooldown, max 3 pending, min 3 activities)
-- Activity log capped at 500 entries
-- Admin dashboard: purge bots, purge all, AI Summary detection with lime badges
 
 ---
 
@@ -1277,11 +1226,6 @@ playbook_run, playbook_list
 - Discover Feed: 3-layer gamertag validation, admin shadowban system, rate limiting
 - Privacy policy link in Settings → Discover
 
-### Infrastructure
-- 9 languages, 1839 translation keys
-- Activity feed logging (local + community)
-- Admin dashboard: notification retract, feed management, shadowban controls
-- htaccess protection for all server-side data files
 
 ## v7.2.1 - Hotfix (March 2026)
 
@@ -1634,12 +1578,6 @@ playbook_run, playbook_list
 - Confirmation message shown after approved tool execution
 - Browser blacklist property name fix (blocked.blocked)
 
-### Infrastructure
-- Author metadata embedded (package.json, meta.ts, /api/health, settings footer)
-- Skales+ tier system foundation (lib/license.ts)
-- Multilingual architecture foundation (lib/i18n.ts, locales/en.json)
-- Google Analytics on skales.app with click event tracking
-- Community testimonial grid on landing page
 
 ---
 
