@@ -33,7 +33,8 @@ A power-user release. Skales lands its first genuinely native organisational sur
 - Add-Ons page reorganized into tabbed sections: Skales Tools, Communication, Integrations, Computer & Vision.
 - Context-size badges next to model names in chat composer and settings (red under 32K, orange 32K-64K, no badge above 64K).
 - General settings group: default location and temperature unit. Powers the weather widget and the new in-chat `get_weather` tool.
-- Multiple Google Calendar IDs supported. Plus-button in calendar config adds a row, list-aware reads fan out across all calendars.
+- Multiple Google Calendar IDs supported. Plus-button in calendar config adds a row, list-aware reads fan out across all calendars. 
+(thanks @pono1012 for the original patch)
 - Jina Reader as alternative web-text extractor next to Tavily, behind a provider selector in Settings -> Providers.
 - DeepSeek accepts `web_search` as an alias for the canonical `search_web` tool name.
 - AppImage on Ubuntu 24.04+ falls back to no-sandbox when the kernel restricts unprivileged userns. AppArmor profile snippet in INSTALL-LINUX.md.
