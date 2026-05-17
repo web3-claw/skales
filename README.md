@@ -1,5 +1,10 @@
 <div align="center">
-  <h1>Skales 🦎</h1>
+    <h1>Skales 🦎</h1>
+  <a href="https://github.com/skalesapp">
+    <img src="https://github.com/skalesapp.png" alt="Skales App" width="110" />
+  </a>
+ 
+  <br>
   <p>Skales Desktop:
     <a href="https://skales.app/download/latest-windows"><b>Windows</b></a> · 
     <a href="https://skales.app/download/latest-mac-arm64"><b>macOS (Apple Silicon)</b></a> · 
@@ -33,6 +38,44 @@
   </p>
 <br><br>
 
+</div>
+
+## 📋 Table of Contents
+
+- [Demo](#demo)
+- [⚡ Why Skales?](#-why-skales)
+- [🚀 What Skales Can Do](#-what-skales-can-do)
+  - [🧩 Agent Skills](#-agent-skills-open-standard)
+  - [🛠️ Skales Codework](#️-skales-codework)
+  - [🏢 Organization](#-organization)
+  - [📱 Skales Mobile](#-skales-mobile)
+  - [🗣️ Voice — Talk to Skales](#️-voice--talk-to-skales)
+  - [🌐 Inline HTML Preview](#-inline-html-preview)
+  - [🖥️ Computer Use](#️-computer-use)
+  - [🦁 Lio AI (Code Builder)](#-lio-ai-code-builder)
+  - [🎨 Skales Studio](#-skales-studio)
+  - [🗂️ Templates](#️-templates)
+  - [🌐 Built-in Browser Agent](#-built-in-browser-agent)
+  - [🌐 WordPress 2.0](#-wordpress-20)
+  - [🎮 Playground](#-playground)
+  - [🔍 Spotlight and Vision](#-spotlight-and-vision)
+  - [🦎 Desktop Buddy](#-desktop-buddy)
+  - [📅 Planner, Calendar and AI Tasks](#-planner-calendar-and-ai-tasks)
+  - [🧠 Memory and Dreaming](#-memory-and-dreaming)
+- [🔌 Integrations](#-integrations)
+- [🧠 15+ AI Providers](#-15-ai-providers)
+- [🌍 Discover](#-discover)
+- [📊 Skales Wrapped](#-skales-wrapped)
+- [🛡️ Privacy and Security](#️-privacy-and-security)
+- [📦 Installation](#-installation)
+- [🏗️ Architecture](#️-architecture)
+- [🤝 Community](#-community)
+- [⭐ Star History](#-star-history)
+- [📜 License](#-license)
+
+---
+
+<div align="center">
 
 ## Demo
 
@@ -108,10 +151,10 @@ Build an AI company. Create departments, assign specialized agents, set team lea
 
 Your AI agent in your pocket. Android now, iOS soon. Pair via QR and the phone instantly gets access to THIS desktop's full tool set (139+ tools: shell, files, browser control, email, calendar, Studio, everything). End-to-end encrypted relay. Keys never leave the devices. Or run the phone **standalone** — 27 native mobile tools, no desktop needed. Shared ecosystem: same Discover Feed, same Custom Agents, same Skills.
 
-### 🗣️ Voice — Talk to Skales (NEW in v10)
+### 🗣️ Voice — Talk to Skales
 Per-message speaker icon on every AI reply. Optional "Read responses aloud" for continuous flow. TTS providers: Device voices (free), OpenAI Speech 6 natural voices, ElevenLabs, Azure, or any OpenAI-compatible endpoint. STT via Groq Whisper (free tier) or OpenAI Whisper. Full Voice Chat Mode for hands-free operation.
 
-### 🌐 Inline HTML Preview (NEW in v10)
+### 🌐 Inline HTML Preview
 When the AI writes a ```` ```html ```` block in chat, Skales renders it live in a sandboxed iframe right in the conversation. Perfect for "make me a chart of X", "embed a map", "build an SVG icon", mini-apps. Buttons: Show Code, Download HTML, Save as Image, Mute, Hide. Mute + hide are global and persist across sessions — one click silences every preview in every chat.
 
 ### 🖥️ Computer Use
@@ -140,7 +183,7 @@ Your AI navigates websites, clicks buttons, fills forms, bypasses cookie banners
 ### 🌐 WordPress 2.0
 Connect to any WordPress site with the [Skales Connector Plugin v1.2.0](https://github.com/skalesapp/wordpress). Type "create a landing page for my product" and Skales builds it with Elementor's Flexbox Container format and professional design templates. 96KB Design Skill with 15 Elementor + 10 Gutenberg templates. Manage pages, posts, WooCommerce products, SEO meta, media uploads, and cache clearing through natural language. Web search available in WordPress agent for current content.
 
-### 🎮 Playground (Beta)
+### 🎮 Playground
 Your personal AI workspace. A deep onboarding interview (15 questions, 4 phases) learns your work style, goals, and preferences. Based on your answers, Playground suggests personalized Spaces — interactive mini-apps built specifically for you. Spaces persist data locally, connect to AI, and can be shared on the Discover Feed (personal data auto-removed). Glassmorphism UI with animated mesh background.
 
 ### 🔍 Spotlight and Vision
@@ -271,8 +314,32 @@ Like Spotify Wrapped for your AI. Auto-generates every Monday. Activities, top t
 
 **Maintainer:** Mario Simic (solo founder, Vienna, Austria).
 
-**Contributors:** [@btafoya](https://github.com/btafoya), [@bmp-jaller](https://github.com/bmp-jaller), [@henk717](https://github.com/henk717), [@SohaibKhaliq](https://github.com/SohaibKhaliq), [@VladB-evs](https://github.com/VladB-evs), [@v33-kind](https://github.com/v33-kind), [@sidharth-vijayan](https://github.com/sidharth-vijayan), [@saagnik23](https://github.com/saagnik23), [@Kombowz](https://github.com/Kombowz), [@anthonytrance](https://github.com/anthonytrance), [@karelrokk-droid](https://github.com/karelrokk-droid), [@mclaudiopt](https://github.com/mclaudiopt), [@1Hackoon](https://github.com/1Hackoon), [@tbaumann](https://github.com/tbaumann), [@Derrick-xn](https://github.com/Derrick-xn) [@jazzroutine](https://github.com/jazzroutine) [@LLen](https://github.com/LLen) [@NikiKeyz](https://github.com/NikiKeyz) 
+**Co-Pilot:**
+<p align="left">
+    <a href="https://github.com/NikiKeyz"><img src="https://github.com/NikiKeyz.png" width="56" height="56" alt="NikiKeyz" style="border-radius:50%" /></a>
+</p>
 
+**Contributors:**
+
+<p align="left">
+  <a href="https://github.com/btafoya"><img src="https://github.com/btafoya.png" width="56" height="56" alt="btafoya" style="border-radius:50%" /></a>
+  <a href="https://github.com/bmp-jaller"><img src="https://github.com/bmp-jaller.png" width="56" height="56" alt="bmp-jaller" style="border-radius:50%" /></a>
+  <a href="https://github.com/henk717"><img src="https://github.com/henk717.png" width="56" height="56" alt="henk717" style="border-radius:50%" /></a>
+  <a href="https://github.com/SohaibKhaliq"><img src="https://github.com/SohaibKhaliq.png" width="56" height="56" alt="SohaibKhaliq" style="border-radius:50%" /></a>
+  <a href="https://github.com/VladB-evs"><img src="https://github.com/VladB-evs.png" width="56" height="56" alt="VladB-evs" style="border-radius:50%" /></a>
+  <a href="https://github.com/v33-kind"><img src="https://github.com/v33-kind.png" width="56" height="56" alt="v33-kind" style="border-radius:50%" /></a>
+  <a href="https://github.com/sidharth-vijayan"><img src="https://github.com/sidharth-vijayan.png" width="56" height="56" alt="sidharth-vijayan" style="border-radius:50%" /></a>
+  <a href="https://github.com/saagnik23"><img src="https://github.com/saagnik23.png" width="56" height="56" alt="saagnik23" style="border-radius:50%" /></a>
+  <a href="https://github.com/Kombowz"><img src="https://github.com/Kombowz.png" width="56" height="56" alt="Kombowz" style="border-radius:50%" /></a>
+  <a href="https://github.com/anthonytrance"><img src="https://github.com/anthonytrance.png" width="56" height="56" alt="anthonytrance" style="border-radius:50%" /></a>
+  <a href="https://github.com/karelrokk-droid"><img src="https://github.com/karelrokk-droid.png" width="56" height="56" alt="karelrokk-droid" style="border-radius:50%" /></a>
+  <a href="https://github.com/mclaudiopt"><img src="https://github.com/mclaudiopt.png" width="56" height="56" alt="mclaudiopt" style="border-radius:50%" /></a>
+  <a href="https://github.com/1Hackoon"><img src="https://github.com/1Hackoon.png" width="56" height="56" alt="1Hackoon" style="border-radius:50%" /></a>
+  <a href="https://github.com/tbaumann"><img src="https://github.com/tbaumann.png" width="56" height="56" alt="tbaumann" style="border-radius:50%" /></a>
+  <a href="https://github.com/Derrick-xn"><img src="https://github.com/Derrick-xn.png" width="56" height="56" alt="Derrick-xn" style="border-radius:50%" /></a>
+  <a href="https://github.com/jazzroutine"><img src="https://github.com/jazzroutine.png" width="56" height="56" alt="jazzroutine" style="border-radius:50%" /></a>
+  <a href="https://github.com/LLen"><img src="https://github.com/LLen.png" width="56" height="56" alt="LLen" style="border-radius:50%" /></a>
+</p>
 
 [Discussions](https://github.com/skalesapp/skales/discussions) · [Bug Reports](https://github.com/skalesapp/skales/issues)
 
